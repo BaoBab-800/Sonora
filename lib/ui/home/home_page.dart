@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/theme/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,9 +12,9 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Card(
           color: context.colors.primary,
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text('Sonora'),
+            child: Text(context.l10n.denchik),
           ),
         ),
       ),
