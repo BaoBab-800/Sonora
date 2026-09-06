@@ -8,7 +8,7 @@ const theme = AppTheme(
     ),
 
     surfaces: AppSurfaceColors(
-      surface: Color(0xFF0C0C16),
+      surface: Color(0xFFECECF6),
     ),
   ),
 

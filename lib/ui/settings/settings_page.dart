@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sonora/ui/settings/settings_theme.dart';
 
 import 'settings_locale.dart';
 
@@ -12,6 +13,7 @@ class SettingsPage extends StatelessWidget {
 
       body: ListView(
         children: [
+          SettingsTheme(),
           SettingsLocale(),
         ],
       ),

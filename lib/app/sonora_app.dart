@@ -23,7 +23,7 @@ class SonoraApp extends ConsumerWidget {
 
           theme: theme.light,
           darkTheme: theme.dark,
-          themeMode: ThemeMode.dark,
+          themeMode: settings.themeMode,
 
           locale: settings.locale,
           supportedLocales: L10n.supportedLocales,
