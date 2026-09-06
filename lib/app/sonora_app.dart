@@ -12,7 +12,7 @@ class SonoraApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsService);
+    final settings = ref.watch(settingsProvider);
 
     return settings.when(
       loading: () => const CircularProgressIndicator(),

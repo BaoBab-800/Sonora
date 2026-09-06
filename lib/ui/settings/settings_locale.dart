@@ -9,8 +9,8 @@ class SettingsLocale extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsService);
-    final notifier = ref.read(settingsService.notifier);
+    final settings = ref.watch(settingsProvider);
+    final notifier = ref.read(settingsProvider.notifier);
 
     return Column(
       children: [

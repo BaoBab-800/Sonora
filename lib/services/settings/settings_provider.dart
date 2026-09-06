@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonora/core/providers/storage_provider.dart';
 import 'package:sonora/data/settings/settings_model.dart';
 
-class SettingsService extends AsyncNotifier<Settings> {
+class SettingsProvider extends AsyncNotifier<Settings> {
   static const _themeKey = 'themeMode';
   static const _localeKey = 'locale';
 

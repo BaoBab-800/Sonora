@@ -5,7 +5,7 @@ import 'package:sonora/data/settings/settings_model.dart';
 import 'package:sonora/services/storage/i_key_value_storage.dart';
 import 'package:sonora/services/storage/hive_key_value_storage.dart';
 
-import 'package:sonora/services/settings/settings_service.dart';
+import 'package:sonora/services/settings/settings_provider.dart';
 
 final storageBoxProvider = Provider<Box<dynamic>>((ref) {
   return Hive.box<dynamic>('storage');
@@ -17,6 +17,6 @@ final storageProvider = Provider<IKeyValueStorage>((ref) {
   return HiveKeyValueStorage(box);
 });
 
-final settingsService = AsyncNotifierProvider<SettingsService, Settings>(
-  SettingsService.new,
+final settingsProvider = AsyncNotifierProvider<SettingsProvider, Settings>(
+  SettingsProvider.new,
 );
