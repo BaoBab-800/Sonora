@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sonora/data/settings/settings_model.dart';
 import 'package:sonora/core/providers/storage_provider.dart';
+import 'package:sonora/data/settings/settings_model.dart';
 
-class SettingsNotifier extends AsyncNotifier<Settings> {
+class SettingsService extends AsyncNotifier<Settings> {
   static const _themeKey = 'themeMode';
   static const _localeKey = 'locale';
 

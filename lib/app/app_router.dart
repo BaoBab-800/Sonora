@@ -1,9 +1,12 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import 'package:sonora/ui/home/home_page.dart';
+import 'package:go_router/go_router.dart';
+
+import '../ui/home/home_page.dart';
+import '../ui/settings/settings_page.dart';
 
 enum AppRoutes {
-  home(name: 'home', path: '/');
+  home(name: 'home', path: '/'),
+  settings(name: 'settings', path: '/settings');
 
   final String name;
   final String path;
@@ -22,6 +25,12 @@ class AppRouter {
         name: AppRoutes.home.name,
         path: AppRoutes.home.path,
         builder: (context, state) => const HomePage(),
+      ),
+
+      GoRoute(
+        name: AppRoutes.settings.name,
+        path: AppRoutes.settings.path,
+        builder: (context, state) => const SettingsPage(),
       ),
     ],
   );
