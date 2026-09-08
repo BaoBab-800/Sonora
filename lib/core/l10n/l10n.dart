@@ -23,3 +23,11 @@ class L10n {
 extension L10nX on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;
 }
+
+extension ThemeModeX on ThemeMode {
+  String label(AppLocalizations l10n) => switch (this) {
+    ThemeMode.system => l10n.themeSystem,
+    ThemeMode.light => l10n.themeLight,
+    ThemeMode.dark => l10n.themeDark,
+  };
+}

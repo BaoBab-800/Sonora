@@ -10,4 +10,22 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get denchik => 'Денчик';
+
+  @override
+  String get settings => 'Налаштування';
+
+  @override
+  String get theme => 'Тема';
+
+  @override
+  String get themeSystem => 'Система';
+
+  @override
+  String get themeLight => 'Світла';
+
+  @override
+  String get themeDark => 'Темна';
+
+  @override
+  String get language => 'Мова';
 }

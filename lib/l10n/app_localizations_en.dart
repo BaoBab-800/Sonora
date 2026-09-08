@@ -10,4 +10,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get denchik => 'Denchik';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get language => 'Language';
 }

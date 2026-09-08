@@ -1,3 +1,10 @@
 {
-  "denchik": "Денчик"
+  "denchik": "Денчик",
+
+  "settings": "Налаштування",
+  "themeSystem": "Система",
+  "themeLight": "Світла",
+  "themeDark": "Темна",
+  "theme": "Тема",
+  "language": "Мова"
 }

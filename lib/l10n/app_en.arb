@@ -1,3 +1,10 @@
 {
-  "denchik": "Denchik"
+  "denchik": "Denchik",
+
+  "settings": "Settings",
+  "theme": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "language": "Language"
 }

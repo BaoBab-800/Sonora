@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/providers/storage_provider.dart';
 
 class SettingsTheme extends ConsumerWidget {
@@ -13,7 +14,7 @@ class SettingsTheme extends ConsumerWidget {
 
     return Column(
       children: [
-        Text('Theme'),
+        Text(context.l10n.theme),
 
         settings.when(
           loading: () => const CircularProgressIndicator(),
@@ -31,7 +32,7 @@ class SettingsTheme extends ConsumerWidget {
                   for (final theme in ThemeMode.values)
                     RadioListTile<ThemeMode>(
                       dense: true,
-                      title: Text(theme.toString()),
+                      title: Text(theme.label(context.l10n)),
                       value: theme,
                     ),
                 ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:sonora/app/app_router.dart';
+
 import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/theme/theme.dart';
 
@@ -12,6 +14,10 @@ class HomePage extends StatelessWidget {
       backgroundColor: context.colors.surface,
 
       appBar: AppBar(
+        title: Text(
+          'Sonora',
+        ),
+
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -41,7 +47,7 @@ class HomePage extends StatelessWidget {
         child: ListView(
           children: [
             ListTile(
-              title: Text('Settings'),
+              title: Text(context.l10n.settings),
               onTap: () {
                 Navigator.pop(context);
                 Navigation(context).pushRoute(AppRoutes.settings);
