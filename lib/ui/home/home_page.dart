@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:sonora/core/theme/theme.dart';
 
+import 'package:sonora/services/playback_engine/playback_engine.dart';
+
 import 'home_drawer.dart';
 
 class HomePage extends StatelessWidget {
@@ -101,6 +103,16 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final engine = PlaybackEngine();
+
+          await engine.open('assets/test.mp3');
+          await engine.play();
+        },
+        child: const Icon(Icons.play_arrow),
       ),
 
       drawer: HomeDrawer(),

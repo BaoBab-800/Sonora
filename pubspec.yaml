@@ -15,11 +15,16 @@ dependencies:
   intl: any
   cupertino_icons: ^1.0.8
   app_foundation: ^0.0.1 # Нет пути, это же моя библиотека
+
   go_router: ^18.0.0
+
   flutter_riverpod: ^3.4.2
+
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+
   media_kit: ^1.2.6
+  media_kit_libs_audio: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +35,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/test.mp3
