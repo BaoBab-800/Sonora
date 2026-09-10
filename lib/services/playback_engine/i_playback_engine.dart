@@ -1,4 +1,4 @@
-import 'package:sonora/data/player/player_state.dart';
+import 'package:sonora/data/player_engine/player_state.dart';
 
 abstract interface class IPlaybackEngine {
   Stream<PlayerState> get stateStream;
