@@ -77,8 +77,10 @@ class PlayerManager {
 
   Future<void> dispose() async {
     if (_isDisposed) return;
-    _isDisposed = true;
+
     await disposeAll();
+
+    _isDisposed = true;
     await _aggregatedController.close();
   }
 
