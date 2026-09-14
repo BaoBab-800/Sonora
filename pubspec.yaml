@@ -28,6 +28,8 @@ dependencies:
   media_kit: ^1.2.6
   media_kit_libs_audio: ^1.0.7
 
+  on_audio_query: ^2.9.0
+
   uuid: ^4.6.0
 
 dev_dependencies:
