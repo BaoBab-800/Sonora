@@ -94,6 +94,9 @@ class PlayerController implements IPlayerController {
   Future<void> pause() => _engine.pause();
 
   @override
+  Future<void> stop() => _engine.stop();
+
+  @override
   Future<void> seek(Duration position) => _engine.seek(position);
 
   @override
@@ -287,6 +290,7 @@ class PlayerController implements IPlayerController {
       currentTrack: _queue.currentTrack,
       currentIndex: _queue.currentIndex,
       queueLength: _queue.tracks.length,
+      queue: List.unmodifiable(_queue.tracks),
       repeatMode: _queue.repeatMode,
       shuffleEnabled: _queue.shuffleEnabled,
       volume: _volume,

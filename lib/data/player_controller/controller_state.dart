@@ -12,6 +12,7 @@ class ControllerState {
   final Track? currentTrack;
   final int currentIndex;
   final int queueLength;
+  final List<Track> queue;
   final RepeatMode repeatMode;
   final bool shuffleEnabled;
   final double volume;
@@ -23,6 +24,7 @@ class ControllerState {
     this.currentTrack,
     this.currentIndex = -1,
     this.queueLength = 0,
+    this.queue = const [],
     this.repeatMode = RepeatMode.none,
     this.shuffleEnabled = false,
     this.volume = 1.0,

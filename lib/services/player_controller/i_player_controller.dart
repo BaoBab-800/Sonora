@@ -9,6 +9,7 @@ abstract interface class IPlayerController {
   // Делегируется в PlaybackEngine
   Future<void> play();
   Future<void> pause();
+  Future<void> stop();
   Future<void> seek(Duration position);
   Future<void> setVolume(double volume);
 
