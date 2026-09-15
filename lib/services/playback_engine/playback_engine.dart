@@ -110,7 +110,7 @@ final class PlaybackEngine implements IPlaybackEngine {
 
   @override
   Future<void> setVolume(double volume) {
-    final clamped = volume.clamp(0.0, 1.0);
+    final clamped = volume.clamp(0.0, 1.0) * 100;
     return _guard(
           () => _player.setVolume(clamped),
       'Volume set: $clamped',
