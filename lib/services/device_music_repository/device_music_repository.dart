@@ -1,17 +1,18 @@
 import 'package:on_audio_query/on_audio_query.dart';
 
 import 'package:sonora/data/player_controller/track.dart';
-import 'package:sonora/services/source_resolver/local_file_source_resolver.dart';
+
+import 'package:sonora/services/source_resolver/i_source_resolver.dart';
 
 import 'i_device_music_repository.dart';
 
 final class DeviceMusicRepository implements IDeviceMusicRepository {
   final OnAudioQuery _audioQuery;
-  final LocalFileSourceResolver _resolver;
+  final TrackSourceResolver _resolver;
 
   DeviceMusicRepository({
     OnAudioQuery? audioQuery,
-    required LocalFileSourceResolver resolver,
+    required TrackSourceResolver resolver,
   }) : _audioQuery = audioQuery ?? OnAudioQuery(),
         _resolver = resolver;
 

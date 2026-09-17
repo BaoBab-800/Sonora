@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:sonora/core/providers/storage_provider.dart';
+import 'package:sonora/core/providers/providers.dart';
 import 'package:sonora/data/settings/settings_model.dart';
 
 class SettingsProvider extends AsyncNotifier<Settings> {
