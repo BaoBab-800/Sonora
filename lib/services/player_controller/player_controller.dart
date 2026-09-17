@@ -12,6 +12,9 @@ import '../playback_engine/i_playback_engine.dart';
 import 'i_player_controller.dart';
 
 class PlayerController implements IPlayerController {
+  @override
+  final String id;
+
   final IPlaybackEngine _engine;
 
   final StreamController<ControllerState> _stateController = StreamController<ControllerState>.broadcast();
@@ -23,7 +26,8 @@ class PlayerController implements IPlayerController {
   double _volume = 1.0;
   bool _isDisposed = false;
 
-  PlayerController({required IPlaybackEngine engine}) : _engine = engine {
+  PlayerController({required this.id, required IPlaybackEngine engine})
+      : _engine = engine {
     _engineSub = _engine.stateStream.listen(_onEngineState);
   }
 

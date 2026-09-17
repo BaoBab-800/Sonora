@@ -15,7 +15,7 @@ class PlayerNotFoundException implements Exception {
 }
 
 class PlayerManager {
-  final IPlayerController Function() _controllerFactory;
+  final IPlayerController Function(String id) _controllerFactory;
   final Uuid _uuid = const Uuid();
 
   final Map<String, IPlayerController> _players = {};
@@ -26,7 +26,7 @@ class PlayerManager {
 
   bool _isDisposed = false;
 
-  PlayerManager({required IPlayerController Function() controllerFactory}) : _controllerFactory = controllerFactory;
+  PlayerManager({required IPlayerController Function(String id) controllerFactory}) : _controllerFactory = controllerFactory;
 
   Stream<Map<String, ControllerState>> get stateStream => _aggregatedController.stream;
   List<String> get playerIds => List.unmodifiable(_players.keys);
@@ -35,7 +35,7 @@ class PlayerManager {
     _throwIfDisposed();
 
     final id = _uuid.v4();
-    final controller = _controllerFactory();
+    final controller = _controllerFactory(id);
 
     _players[id] = controller;
     _subscriptions[id] = controller.stateStream.listen((state) {

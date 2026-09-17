@@ -39,7 +39,7 @@ class _PlayerTestState extends State<PlayerTest> {
   void initState() {
     super.initState();
     _manager = PlayerManager(
-      controllerFactory: () => PlayerController(engine: PlaybackEngine()),
+      controllerFactory: (id) => PlayerController(id: id, engine: PlaybackEngine()),
     );
   }
 

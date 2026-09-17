@@ -3,6 +3,8 @@ import 'package:sonora/data/player_controller/track.dart';
 import 'package:sonora/data/player_controller/repeat_mode.dart';
 
 abstract interface class IPlayerController {
+  String get id;
+
   Stream<ControllerState> get stateStream;
   ControllerState get state;
 
