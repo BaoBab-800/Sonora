@@ -25,6 +25,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
+  audio_service: ^0.18.19
   media_kit: ^1.2.6
   media_kit_libs_audio: ^1.0.7
 

@@ -1,6 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:sonora/app/app_bootstrap.dart' as bootstrap;
+
 import 'package:sonora/data/settings/settings_model.dart';
 import 'package:sonora/data/player_controller/controller_state.dart';
 
@@ -79,4 +81,8 @@ final controllerStateProvider = StreamProvider.family<ControllerState, String>((
     return const Stream.empty();
   }
   return controller.stateStream;
+});
+
+final mainPlayerIdProvider = Provider<String>((ref) {
+  return bootstrap.mainPlayerController.id;
 });

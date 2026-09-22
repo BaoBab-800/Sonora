@@ -19,6 +19,14 @@ class HomeDrawer extends StatelessWidget {
               Navigation(context).pushRoute(AppRoutes.settings);
             },
           ),
+
+          ListTile(
+            title: Text('Test player'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigation(context).pushRoute(AppRoutes.testPlayer);
+            },
+          ),
         ],
       ),
     );
