@@ -82,7 +82,7 @@ final class PlaybackEngine implements IPlaybackEngine {
     );
 
     try {
-      await _player.open(Media(source));
+      await _player.open(Media(source), play: false);
     } catch (e, st) {
       developer.log('Failed to open source: $e', name: 'PlaybackEngine', error: e, stackTrace: st);
       _updateState(status: PlayerStatus.error);
