@@ -34,9 +34,7 @@ class HomePage extends StatelessWidget {
           title: const _Wordmark(),
           actions: const [
             _StatusPill(),
-            SizedBox(width: 12),
-            CircleAvatar(radius: 16, child: Icon(Icons.person_outline, size: 18)),
-            SizedBox(width: 20),
+            SizedBox(width: 26),
           ],
         ),
 
