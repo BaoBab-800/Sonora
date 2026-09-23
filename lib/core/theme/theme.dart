@@ -14,11 +14,11 @@ const theme = AppTheme(
 
   darkPalette: AppPalette(
     brand: AppBrandColors(
-      primary: Color(0xFFB34242),
+      primary: Color(0xFFD84A4A),
     ),
 
     surfaces: AppSurfaceColors(
-      surface: Color(0xFF100C0C),
+      surface: Color(0xFF111214),
     ),
   ),
 );
