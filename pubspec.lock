@@ -17,14 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "13.3.0"
-  app_foundation:
-    dependency: "direct main"
-    description:
-      name: app_foundation
-      sha256: eff4741db6ee8314618d3dd1cfefe4aabb732be2f5591bcb336623131cfe6026
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.1"
   archive:
     dependency: transitive
     description:

@@ -21,8 +21,8 @@ class SonoraApp extends ConsumerWidget {
         return MaterialApp.router(
           title: 'Sonora',
 
-          theme: theme.light,
-          darkTheme: theme.dark,
+          theme: lightTheme,
+          darkTheme: darkTheme,
           themeMode: settings.themeMode,
 
           locale: settings.locale,

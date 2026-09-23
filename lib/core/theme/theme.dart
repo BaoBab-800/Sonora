@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:app_foundation/app_foundation.dart';
 
-const theme = AppTheme(
-  lightPalette: AppPalette(
-    brand: AppBrandColors(
-      primary: Color(0xFFFF9292),
-    ),
-
-    surfaces: AppSurfaceColors(
-      surface: Color(0xFFEFDCDC),
-    ),
+final lightTheme = ThemeData(
+  brightness: Brightness.light,
+  colorScheme: const ColorScheme.light(
+    primary: Color(0xFFFF9292),
+    surface: Color(0xFFEFDCDC),
+    outline: Color(0xFFA3A5AA),
   ),
 
-  darkPalette: AppPalette(
-    brand: AppBrandColors(
-      primary: Color(0xFFD84A4A),
-    ),
+  shadowColor: Color(0xFFFFFFFF),
+);
 
-    surfaces: AppSurfaceColors(
-      surface: Color(0xFF111214),
-    ),
+final darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  colorScheme: const ColorScheme.dark(
+    primary: Color(0xFFD84A4A),
+    surface: Color(0xFF111214),
+    outline: Color(0xFF33353A),
   ),
+
+  shadowColor: const Color(0x33000000),
 );
 
 extension ThemeContext on BuildContext {
