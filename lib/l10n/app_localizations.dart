@@ -136,6 +136,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
+
+  /// No description provided for @noAudioTracksFoundOnTheDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'No audio tracks found on the device.'**
+  String get noAudioTracksFoundOnTheDevice;
+
+  /// No description provided for @failedToLoadTheMediaLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load the media library'**
+  String get failedToLoadTheMediaLibrary;
+
+  /// No description provided for @createAPlayerToStartPlayback.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a player to start playback.'**
+  String get createAPlayerToStartPlayback;
+
+  /// No description provided for @playerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Player error'**
+  String get playerError;
+
+  /// No description provided for @localLibary.
+  ///
+  /// In en, this message translates to:
+  /// **'LOCAL LIBARY'**
+  String get localLibary;
+
+  /// No description provided for @nowPlaying.
+  ///
+  /// In en, this message translates to:
+  /// **'NOW PLAYING'**
+  String get nowPlaying;
+
+  /// No description provided for @tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'TRACKS'**
+  String get tracks;
+
+  /// No description provided for @noQueue.
+  ///
+  /// In en, this message translates to:
+  /// **'NO QUEUE'**
+  String get noQueue;
+
+  /// No description provided for @selectAPlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a player'**
+  String get selectAPlayer;
+
+  /// No description provided for @removeCurrentPlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove current player'**
+  String get removeCurrentPlayer;
+
+  /// No description provided for @players.
+  ///
+  /// In en, this message translates to:
+  /// **'Players'**
+  String get players;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'Ok'**
+  String get ok;
+
+  /// No description provided for @loadingMusic.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading music...'**
+  String get loadingMusic;
+
+  /// No description provided for @uploadMusicFromTheDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload music from the device'**
+  String get uploadMusicFromTheDevice;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @queue.
+  ///
+  /// In en, this message translates to:
+  /// **'Queue'**
+  String get queue;
+
+  /// No description provided for @addToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get addToFavorites;
+
+  /// No description provided for @unknownArtist.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown artist'**
+  String get unknownArtist;
+
+  /// No description provided for @selectMusic.
+  ///
+  /// In en, this message translates to:
+  /// **'Select music'**
+  String get selectMusic;
+
+  /// No description provided for @thePlayersHaveNotYetBeenCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'The players have not yet been created.'**
+  String get thePlayersHaveNotYetBeenCreated;
+
+  /// No description provided for @newPlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'New player'**
+  String get newPlayer;
+
+  /// No description provided for @createPlayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Creaye player'**
+  String get createPlayer;
+
+  /// No description provided for @playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlists'**
+  String get playlists;
+
+  /// No description provided for @allYourPlaylists.
+  ///
+  /// In en, this message translates to:
+  /// **'All your playlists'**
+  String get allYourPlaylists;
+
+  /// No description provided for @artists.
+  ///
+  /// In en, this message translates to:
+  /// **'Artists'**
+  String get artists;
+
+  /// No description provided for @allYourArtists.
+  ///
+  /// In en, this message translates to:
+  /// **'All your artists'**
+  String get allYourArtists;
+
+  /// No description provided for @favorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get favorite;
+
+  /// No description provided for @yourFavoriteSongs.
+  ///
+  /// In en, this message translates to:
+  /// **'Your favorite songs'**
+  String get yourFavoriteSongs;
+
+  /// No description provided for @collection.
+  ///
+  /// In en, this message translates to:
+  /// **'Collection'**
+  String get collection;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon...'**
+  String get comingSoon;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

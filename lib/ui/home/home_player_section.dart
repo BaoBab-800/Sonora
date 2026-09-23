@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/providers/providers.dart';
 import 'package:sonora/core/theme/theme.dart';
+
 import 'package:sonora/data/player_controller/controller_state.dart';
 import 'package:sonora/data/player_controller/repeat_mode.dart' as repeat;
 import 'package:sonora/data/player_controller/track.dart';
 import 'package:sonora/data/player_engine/player_status.dart';
+
 import 'package:sonora/services/player_controller/i_player_controller.dart';
 
 class HomePlayerSection extends ConsumerStatefulWidget {
@@ -84,12 +87,12 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     try {
       final tracks = await ref.read(deviceMusicRepositoryProvider).loadSongs();
       if (tracks.isEmpty) {
-        if (mounted) setState(() => _error = 'На устройстве не найдено аудиотреков.');
+        if (mounted) setState(() => _error = context.l10n.noAudioTracksFoundOnTheDevice);
         return;
       }
       await _controller!.setQueue(tracks);
     } catch (error) {
-      if (mounted) setState(() => _error = 'Не удалось загрузить медиатеку: $error');
+      if (mounted) setState(() => _error = '${context.l10n.failedToLoadTheMediaLibrary}: $error');
     } finally {
       if (mounted) setState(() => _isLoadingLibrary = false);
     }
@@ -98,13 +101,13 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   Future<void> _run(Future<void> Function(IPlayerController player) action) async {
     final player = _controller;
     if (player == null) {
-      setState(() => _error = 'Создайте плеер, чтобы начать воспроизведение.');
+      setState(() => _error = context.l10n.createAPlayerToStartPlayback);
       return;
     }
     try {
       await action(player);
     } catch (error) {
-      if (mounted) setState(() => _error = 'Ошибка плеера: $error');
+      if (mounted) setState(() => _error = '${context.l10n.playerError}: $error');
     }
   }
 
@@ -112,7 +115,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Плееры'),
+        title: Text(context.l10n.players),
 
         content: SizedBox(
           width: 420,
@@ -136,7 +139,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Готово'),
+            child: Text(context.l10n.ok),
           )
         ],
       ),
@@ -191,8 +194,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 ),
 
                 const SizedBox(width: 8),
-                const Text(
-                  'NOW PLAYING',
+                Text(
+                  context.l10n.nowPlaying,
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
@@ -204,8 +207,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 const Spacer(),
                 Text(
                   _state.queueLength == 0
-                      ? 'NO QUEUE'
-                      : '${_state.queueLength.toString().padLeft(2, '0')} TRACKS',
+                      ? context.l10n.noQueue
+                      : '${_state.queueLength.toString().padLeft(2, '0')} ${context.l10n.tracks}',
                   style: const TextStyle(
                     fontSize: 10,
                     letterSpacing: 1.1,
@@ -225,13 +228,13 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 Expanded(child: _TrackDetails(track: track)),
 
                 IconButton(
-                  tooltip: 'Выбрать плеер',
+                  tooltip: context.l10n.selectAPlayer,
                   onPressed: _showPlayersDialog,
                   icon: const Icon(Icons.speaker_group_outlined),
                 ),
 
                 IconButton(
-                  tooltip: 'Удалить текущий плеер',
+                  tooltip: context.l10n.removeCurrentPlayer,
                   onPressed: _selectedPlayerId == null ? null : _removeSelectedPlayer,
                   icon: const Icon(Icons.delete_outline),
                 ),
@@ -385,8 +388,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
               ),
               label: Text(_isLoadingLibrary
-                  ? 'Загрузка музыки…'
-                  : 'Загрузить музыку с устройства',
+                  ? context.l10n.loadingMusic
+                  : context.l10n.uploadMusicFromTheDevice,
               ),
             ),
 
@@ -399,7 +402,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   actions: [
                     TextButton(
                       onPressed: () => setState(() => _error = null),
-                      child: const Text('Закрыть'),
+                      child: Text(context.l10n.close),
                     ),
                   ],
                 ),
@@ -412,13 +415,13 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   TextButton.icon(
                     onPressed: () => _showQueueDialog(_state.queue),
                     icon: const Icon(Icons.queue_music),
-                    label: Text('Очередь · ${_state.queueLength}'),
+                    label: Text('${context.l10n.queue} · ${_state.queueLength}'),
                   ),
                 ],
 
                 const Spacer(),
                 IconButton(
-                  tooltip: 'В избранное',
+                  tooltip: context.l10n.addToFavorites,
                   onPressed: hasTrack
                       ? () => setState(() => _isFavorite = !_isFavorite)
                       : null,
@@ -448,7 +451,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     return showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Очередь'),
+        title: Text(context.l10n.queue),
         content: SizedBox(
           width: 480,
           child: ListView.builder(
@@ -467,7 +470,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   overflow: TextOverflow.ellipsis,
                 ),
 
-                subtitle: Text(track.artist ?? 'Неизвестный исполнитель'),
+                subtitle: Text(track.artist ?? context.l10n.unknownArtist),
 
                 onTap: () {
                   Navigator.pop(context);
@@ -492,7 +495,7 @@ class _TrackDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          track?.title ?? 'Выберите музыку',
+          track?.title ?? context.l10n.selectMusic,
           style: Theme.of(context).textTheme.titleLarge,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -502,7 +505,7 @@ class _TrackDetails extends StatelessWidget {
         Text(
           track?.artist?.isNotEmpty == true
               ? track!.artist!
-              : 'Загрузите треки с устройства',
+              : context.l10n.uploadMusicFromTheDevice,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],
@@ -586,8 +589,9 @@ class _PlayerList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
       if (playerIds.isEmpty)
-        const Padding(padding: EdgeInsets.all(12),
-          child: Text('Плееры ещё не созданы.'),
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(context.l10n.thePlayersHaveNotYetBeenCreated),
         ),
 
       ...playerIds.map((id) {
@@ -595,7 +599,7 @@ class _PlayerList extends StatelessWidget {
         return ListTile(
           selected: id == selectedId,
           leading: const CircleAvatar(child: Icon(Icons.music_note)),
-          title: Text(state?.currentTrack?.title ?? 'Новый плеер'),
+          title: Text(state?.currentTrack?.title ?? context.l10n.newPlayer),
           subtitle: Text('ID: ${id.substring(0, 8)}'),
           onTap: () => onSelect(id),
         );
@@ -605,7 +609,7 @@ class _PlayerList extends StatelessWidget {
       FilledButton.icon(
         onPressed: onCreate,
         icon: const Icon(Icons.add),
-        label: const Text('Создать плеер'),
+        label: Text(context.l10n.createPlayer),
       ),
     ]);
   }

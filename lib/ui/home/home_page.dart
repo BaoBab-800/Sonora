@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/theme/theme.dart';
 
 import 'home_drawer.dart';
@@ -103,7 +105,7 @@ class _StatusPill extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
 
-      child: const Row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
@@ -114,11 +116,8 @@ class _StatusPill extends StatelessWidget {
 
           SizedBox(width: 6),
           Text(
-            'LOCAL LIBRARY',
-            style: TextStyle(
-              fontSize: 10,
-              letterSpacing: 1.1,
-            ),
+            context.l10n.localLibary,
+            style: TextStyle(fontSize: 10),
           ),
         ],
       ),
@@ -131,26 +130,26 @@ class _LibraryPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         _LibraryCard(
           icon: Icons.queue_music_rounded,
-          label: 'Плейлисты',
-          note: 'Соберите первый сет из треков',
+          label: context.l10n.playlists,
+          note: context.l10n.allYourPlaylists,
         ),
 
         SizedBox(height: 12),
         _LibraryCard(
           icon: Icons.mic_none_rounded,
-          label: 'Исполнители',
-          note: 'Появятся после сканирования',
+          label: context.l10n.artists,
+          note: context.l10n.allYourArtists,
         ),
 
         SizedBox(height: 12),
         _LibraryCard(
           icon: Icons.favorite_border_rounded,
-          label: 'Избранное',
-          note: 'Сохраняйте любимое одним касанием',
+          label: context.l10n.favorite,
+          note: context.l10n.yourFavoriteSongs,
         ),
       ],
     );
@@ -173,7 +172,6 @@ class _LibraryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        // color: const Color(0xff1a1b1e),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: context.colors.outline),
       ),
@@ -245,11 +243,13 @@ class _CollectionSection extends StatelessWidget {
             children: [
               const Icon(Icons.library_music_outlined, size: 19),
               const SizedBox(width: 9),
-              Text('Коллекция', style: Theme
-                  .of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontWeight: FontWeight.w700),
+              Text(
+                context.l10n.collection,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w700),
               ),
 
               const Spacer(),
@@ -268,24 +268,24 @@ class _CollectionSection extends StatelessWidget {
           Container(height: 1, color: const Color(0xFF303237)),
 
           const SizedBox(height: 17),
-          const Row(
+          Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.album_outlined,
                 color: Color(0xFF777A80),
               ),
 
-              SizedBox(width: 13),
+              const SizedBox(width: 13),
               Expanded(
                 child: Text(
-                  'Загрузите музыку, чтобы увидеть свою коллекцию',
+                  context.l10n.comingSoon,
                   style: TextStyle(
                     color: Color(0xFFAEB0B5),
                   ),
                 ),
               ),
 
-              Icon(
+              const Icon(
                 Icons.arrow_forward_rounded,
                 color: Color(0xFF777A80),
               )
