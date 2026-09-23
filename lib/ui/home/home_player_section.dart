@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sonora/core/providers/providers.dart';
+import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/data/player_controller/controller_state.dart';
 import 'package:sonora/data/player_controller/repeat_mode.dart' as repeat;
 import 'package:sonora/data/player_controller/track.dart';
@@ -169,10 +170,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: const Color(0xff17181a),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xff32343a)),
-        boxShadow: const [BoxShadow(color: Color(0x33000000), blurRadius: 24, offset: Offset(0, 12))],
+        border: Border.all(color: context.colors.outline),
       ),
 
       child: Padding(
@@ -186,7 +185,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   width: 8,
                   height: 8,
                   decoration: const BoxDecoration(
-                    color: Color(0xffd84a4a),
+                    color: Color(0xFFD84A4A),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -198,7 +197,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.4,
-                    color: Color(0xffb9bbc0),
+                    color: Color(0xFFA5A9B0),
                   ),
                 ),
 
@@ -210,7 +209,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   style: const TextStyle(
                     fontSize: 10,
                     letterSpacing: 1.1,
-                    color: Color(0xff7f8288),
+                    color: Color(0xFF616A78),
                   ),
                 ),
               ],
@@ -242,6 +241,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
             const SizedBox(height: 20),
             SliderTheme(
               data: SliderTheme.of(context).copyWith(
+                activeTrackColor: context.colors.primary,
+                inactiveTrackColor: context.colors.outline,
                 trackHeight: 3,
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
@@ -324,11 +325,11 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
               ],
             ),
 
-            const Divider(height: 36, color: Color(0xff34363b)),
+            const Divider(height: 36, color: Color(0xFF34363B)),
 
             Row(
               children: [
-                IconButton.filledTonal(
+                IconButton.outlined(
                   onPressed: hasTrack
                       ? () => _controller?.setShuffle(!_state.shuffleEnabled)
                       : null,
@@ -340,7 +341,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 ),
 
                 const SizedBox(width: 8),
-                IconButton.filledTonal(
+                IconButton.outlined(
                   onPressed: hasTrack
                       ? _cycleRepeat
                       : null,
@@ -382,7 +383,6 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   : const Icon(Icons.library_music_outlined),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
-                side: const BorderSide(color: Color(0xff45474d)),
               ),
               label: Text(_isLoadingLibrary
                   ? 'Загрузка музыки…'
@@ -517,19 +517,25 @@ class _AlbumDisc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark; final discColors = isDark
+        ? const [
+      Color(0xFF3D4045),
+      Color(0xFF1C1D20),
+      Color(0xFF101113),
+    ] : const [
+      Color(0xFF8B8D91),
+      Color(0xFF5D5F64),
+      Color(0xFF3A3C40),
+    ];
+
     return Container(
       width: 84,
       height: 84,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: const RadialGradient(
-          colors: [
-            Color(0xff3d4045),
-            Color(0xff1c1d20),
-            Color(0xff101113),
-          ],
-        ),
-        border: Border.all(color: const Color(0xff4a4c52)),
+
+        gradient: RadialGradient( colors: discColors, ),
+        border: Border.all(color: const Color(0xFF4A4C52)),
       ),
 
       child: Center(

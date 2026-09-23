@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sonora/core/theme/theme.dart';
 
 import 'home_drawer.dart';
 import 'home_player_section.dart';
@@ -8,65 +9,46 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseTheme = Theme.of(context);
-    final dashboardTheme = baseTheme.copyWith(
-      brightness: Brightness.dark,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xffd84a4a),
-        brightness: Brightness.dark,
-        surface: const Color(0xff111214),
+    return Scaffold(
+      drawer: const HomeDrawer(),
+
+      appBar: AppBar(
+        titleSpacing: 8,
+        title: const _Wordmark(),
+        actions: const [
+          _StatusPill(),
+          SizedBox(width: 26),
+        ],
       ),
-      scaffoldBackgroundColor: const Color(0xff111214),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xff111214),
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-      ),
-    );
 
-    return Theme(
-      data: dashboardTheme,
-      child: Scaffold(
-        drawer: const HomeDrawer(),
+      body: SafeArea(
+        top: false,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final wide = constraints.maxWidth >= 980;
 
-        appBar: AppBar(
-          titleSpacing: 8,
-          title: const _Wordmark(),
-          actions: const [
-            _StatusPill(),
-            SizedBox(width: 26),
-          ],
-        ),
-
-        body: SafeArea(
-          top: false,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final wide = constraints.maxWidth >= 980;
-
-              return ListView(
-                padding: EdgeInsets.fromLTRB(wide ? 32 : 20, 20, wide ? 32 : 20, 36),
-                children: [
-                  if (wide)
-                    const Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(flex: 11, child: HomePlayerSection()),
-                        SizedBox(width: 24),
-                        Expanded(flex: 8, child: _LibraryPanel()),
-                      ],
-                    )
-                  else ...const [
-                    HomePlayerSection(),
-                    SizedBox(height: 24),
-                    _LibraryPanel(),
-                  ],
-                  const SizedBox(height: 24),
-                  const _CollectionSection(),
+            return ListView(
+              padding: EdgeInsets.fromLTRB(wide ? 32 : 20, 20, wide ? 32 : 20, 36),
+              children: [
+                if (wide)
+                  const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(flex: 11, child: HomePlayerSection()),
+                      SizedBox(width: 24),
+                      Expanded(flex: 8, child: _LibraryPanel()),
+                    ],
+                  )
+                else ...const [
+                  HomePlayerSection(),
+                  SizedBox(height: 24),
+                  _LibraryPanel(),
                 ],
-              );
-            },
-          ),
+                const SizedBox(height: 24),
+                const _CollectionSection(),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -117,8 +99,7 @@ class _StatusPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
-        color: const Color(0xff1c1d20),
-        border: Border.all(color: const Color(0xff33353a)),
+        border: Border.all(color: context.colors.outline),
         borderRadius: BorderRadius.circular(20),
       ),
 
@@ -155,7 +136,6 @@ class _LibraryPanel extends StatelessWidget {
         _LibraryCard(
           icon: Icons.queue_music_rounded,
           label: 'Плейлисты',
-          value: '00',
           note: 'Соберите первый сет из треков',
         ),
 
@@ -163,7 +143,6 @@ class _LibraryPanel extends StatelessWidget {
         _LibraryCard(
           icon: Icons.mic_none_rounded,
           label: 'Исполнители',
-          value: '—',
           note: 'Появятся после сканирования',
         ),
 
@@ -171,7 +150,6 @@ class _LibraryPanel extends StatelessWidget {
         _LibraryCard(
           icon: Icons.favorite_border_rounded,
           label: 'Избранное',
-          value: '00',
           note: 'Сохраняйте любимое одним касанием',
         ),
       ],
@@ -183,13 +161,11 @@ class _LibraryCard extends StatelessWidget {
   const _LibraryCard({
     required this.icon,
     required this.label,
-    required this.value,
     required this.note,
   });
 
   final IconData icon;
   final String label;
-  final String value;
   final String note;
 
   @override
@@ -197,9 +173,9 @@ class _LibraryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color(0xff1a1b1e),
+        // color: const Color(0xff1a1b1e),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xff303237)),
+        border: Border.all(color: context.colors.outline),
       ),
 
       child: Row(
@@ -208,7 +184,7 @@ class _LibraryCard extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: const Color(0xff25272b),
+              color: context.colors.outline,
               borderRadius: BorderRadius.circular(11),
             ),
 
@@ -244,15 +220,6 @@ class _LibraryCard extends StatelessWidget {
               ],
             ),
           ),
-
-          Text(
-            value,
-            style: const TextStyle(
-              color: Color(0xffbabdc2),
-              fontFeatures: [FontFeature.tabularFigures()],
-              fontWeight: FontWeight.w700,
-            ),
-          ),
         ],
       ),
     );
@@ -267,9 +234,8 @@ class _CollectionSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
-        color: const Color(0xff161719),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xff2b2d31)),
+        border: Border.all(color: context.colors.outline),
       ),
 
       child: Column(
@@ -299,14 +265,14 @@ class _CollectionSection extends StatelessWidget {
           ),
 
           const SizedBox(height: 20),
-          Container(height: 1, color: const Color(0xff303237)),
+          Container(height: 1, color: const Color(0xFF303237)),
 
           const SizedBox(height: 17),
           const Row(
             children: [
               Icon(
                 Icons.album_outlined,
-                color: Color(0xff777a80),
+                color: Color(0xFF777A80),
               ),
 
               SizedBox(width: 13),
@@ -314,14 +280,14 @@ class _CollectionSection extends StatelessWidget {
                 child: Text(
                   'Загрузите музыку, чтобы увидеть свою коллекцию',
                   style: TextStyle(
-                    color: Color(0xffaeb0b5),
+                    color: Color(0xFFAEB0B5),
                   ),
                 ),
               ),
 
               Icon(
                 Icons.arrow_forward_rounded,
-                color: Color(0xff777a80),
+                color: Color(0xFF777A80),
               )
             ],
           ),
