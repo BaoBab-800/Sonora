@@ -4,21 +4,21 @@ import 'package:app_foundation/app_foundation.dart';
 const theme = AppTheme(
   lightPalette: AppPalette(
     brand: AppBrandColors(
-      primary: Colors.blue,
+      primary: Color(0xFFFF9292),
     ),
 
     surfaces: AppSurfaceColors(
-      surface: Color(0xFFECECF6),
+      surface: Color(0xFFEFDCDC),
     ),
   ),
 
   darkPalette: AppPalette(
     brand: AppBrandColors(
-      primary: Colors.blue,
+      primary: Color(0xFFB34242),
     ),
 
     surfaces: AppSurfaceColors(
-      surface: Color(0xFF0C0C16),
+      surface: Color(0xFF100C0C),
     ),
   ),
 );

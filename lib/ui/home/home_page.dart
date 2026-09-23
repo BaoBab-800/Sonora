@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'home_drawer.dart';
 import 'home_player_section.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,7 +9,22 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sonora')),
+
+      appBar: AppBar(
+        title: const Text('Sonora'),
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+
+              icon: const Icon(Icons.menu),
+            );
+          },
+        ),
+      ),
+
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -40,6 +56,8 @@ class HomePage extends StatelessWidget {
           },
         ),
       ),
+
+      drawer: const HomeDrawer(),
     );
   }
 }

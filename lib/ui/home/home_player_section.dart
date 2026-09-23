@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sonora/core/providers/providers.dart';
+import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/data/player_controller/controller_state.dart';
 import 'package:sonora/data/player_controller/repeat_mode.dart' as repeat;
 import 'package:sonora/data/player_controller/track.dart';
@@ -172,8 +173,11 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Сейчас играет',
-              style: Theme.of(context).textTheme.titleLarge,
+              'Плеер',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
             ),
 
             const SizedBox(height: 16),
@@ -315,7 +319,11 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   : _loadDeviceMusic,
               icon: _isLoadingLibrary
                   ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.library_music_outlined), label: Text(_isLoadingLibrary ? 'Загрузка музыки…' : 'Загрузить музыку с устройства'),
+                  : const Icon(Icons.library_music_outlined),
+              label: Text(_isLoadingLibrary
+                  ? 'Загрузка музыки…'
+                  : 'Загрузить музыку с устройства',
+              ),
             ),
 
             if (_error != null)
