@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sonora/core/providers/providers.dart';
-import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/data/player_controller/controller_state.dart';
 import 'package:sonora/data/player_controller/repeat_mode.dart' as repeat;
 import 'package:sonora/data/player_controller/track.dart';
@@ -24,6 +23,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   String? _selectedPlayerId;
   ControllerState _state = const ControllerState();
   bool _isLoadingLibrary = false;
+  bool _isFavorite = false;
   String? _error;
 
   @override
@@ -165,46 +165,96 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     final position = _state.position.inMilliseconds.clamp(0, duration.inMilliseconds).toDouble();
     final hasTrack = track != null;
 
-    return Card(
+    final isPlaying = _state.status == PlayerStatus.playing;
+    return Container(
       clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: const Color(0xff17181a),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xff32343a)),
+        boxShadow: const [BoxShadow(color: Color(0x33000000), blurRadius: 24, offset: Offset(0, 12))],
+      ),
+
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Плеер',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: Color(0xffd84a4a),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+                const Text(
+                  'NOW PLAYING',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.4,
+                    color: Color(0xffb9bbc0),
+                  ),
+                ),
+
+                const Spacer(),
+                Text(
+                  _state.queueLength == 0
+                      ? 'NO QUEUE'
+                      : '${_state.queueLength.toString().padLeft(2, '0')} TRACKS',
+                  style: const TextStyle(
+                    fontSize: 10,
+                    letterSpacing: 1.1,
+                    color: Color(0xff7f8288),
+                  ),
+                ),
+              ],
             ),
 
             const SizedBox(height: 16),
-            Row(children: [
-              Expanded(child: _TrackDetails(track: track)),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _AlbumDisc(isPlaying: isPlaying),
 
-              IconButton(
-                tooltip: 'Выбрать плеер',
-                onPressed: _showPlayersDialog,
-                icon: const Icon(Icons.speaker_group_outlined),
-              ),
+                const SizedBox(width: 14),
+                Expanded(child: _TrackDetails(track: track)),
 
-              IconButton(
-                tooltip: 'Удалить текущий плеер',
-                onPressed: _selectedPlayerId == null ? null : _removeSelectedPlayer,
-                icon: const Icon(Icons.delete_outline),
-              ),
-            ]),
+                IconButton(
+                  tooltip: 'Выбрать плеер',
+                  onPressed: _showPlayersDialog,
+                  icon: const Icon(Icons.speaker_group_outlined),
+                ),
+
+                IconButton(
+                  tooltip: 'Удалить текущий плеер',
+                  onPressed: _selectedPlayerId == null ? null : _removeSelectedPlayer,
+                  icon: const Icon(Icons.delete_outline),
+                ),
+              ],
+            ),
 
             const SizedBox(height: 20),
-            Slider(
-              value: position,
-              max: maxPosition > 0
-                  ? maxPosition
-                  : 1, onChanged: hasTrack
-                ? (value) => _run((p) => p.seek(Duration(milliseconds: value.round())))
-                : null,
+            SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: 3,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+                overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
+              ),
+
+              child: Slider(
+                value: position,
+                max: maxPosition > 0
+                    ? maxPosition
+                    : 1, onChanged: hasTrack
+                  ? (value) => _run((p) => p.seek(Duration(milliseconds: value.round())))
+                  : null,
+              ),
             ),
 
             Row(
@@ -242,9 +292,12 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                       : p.play())
                       : null,
                   style: FilledButton.styleFrom(
+                    backgroundColor: const Color(0xffd84a4a),
+                    foregroundColor: Colors.white,
                     shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(18),
+                    padding: const EdgeInsets.all(19),
                   ),
+
                   child: Icon(
                     _state.status == PlayerStatus.playing
                         ? Icons.pause
@@ -271,7 +324,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
               ],
             ),
 
-            const Divider(height: 32),
+            const Divider(height: 36, color: Color(0xff34363b)),
 
             Row(
               children: [
@@ -302,11 +355,18 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 const Icon(Icons.volume_up_outlined),
 
                 Expanded(
-                  child: Slider(
-                    value: _state.volume,
-                    onChanged: hasTrack
-                        ? (value) => _run((p) => p.setVolume(value))
-                        : null,
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: 3,
+                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5),
+                    ),
+
+                    child: Slider(
+                      value: _state.volume,
+                      onChanged: hasTrack
+                          ? (value) => _run((p) => p.setVolume(value))
+                          : null,
+                    ),
                   ),
                 ),
               ],
@@ -320,6 +380,10 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
               icon: _isLoadingLibrary
                   ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
                   : const Icon(Icons.library_music_outlined),
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+                side: const BorderSide(color: Color(0xff45474d)),
+              ),
               label: Text(_isLoadingLibrary
                   ? 'Загрузка музыки…'
                   : 'Загрузить музыку с устройства',
@@ -341,14 +405,34 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 ),
               ),
 
-            if (_state.queue.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              TextButton.icon(
-                onPressed: () => _showQueueDialog(_state.queue),
-                icon: const Icon(Icons.queue_music),
-                label: Text('Очередь · ${_state.queueLength}'),
-              ),
-            ],
+            Row(
+              children: [
+                if (_state.queue.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  TextButton.icon(
+                    onPressed: () => _showQueueDialog(_state.queue),
+                    icon: const Icon(Icons.queue_music),
+                    label: Text('Очередь · ${_state.queueLength}'),
+                  ),
+                ],
+
+                const Spacer(),
+                IconButton(
+                  tooltip: 'В избранное',
+                  onPressed: hasTrack
+                      ? () => setState(() => _isFavorite = !_isFavorite)
+                      : null,
+                  icon: Icon(
+                    _isFavorite
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: _isFavorite
+                        ? const Color(0xffd84a4a)
+                        : null,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -422,6 +506,45 @@ class _TrackDetails extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],
+    );
+  }
+}
+
+class _AlbumDisc extends StatelessWidget {
+  const _AlbumDisc({required this.isPlaying});
+
+  final bool isPlaying;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 84,
+      height: 84,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: const RadialGradient(
+          colors: [
+            Color(0xff3d4045),
+            Color(0xff1c1d20),
+            Color(0xff101113),
+          ],
+        ),
+        border: Border.all(color: const Color(0xff4a4c52)),
+      ),
+
+      child: Center(
+        child: Container(
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+            color: isPlaying
+                ? const Color(0xFFD84A4A)
+                : const Color(0xFF777A80),
+            shape: BoxShape.circle,
+            border: Border.all(color: const Color(0xffb4b6ba), width: 2),
+          ),
+        ),
+      ),
     );
   }
 }
