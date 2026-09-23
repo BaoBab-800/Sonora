@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../ui/home/home_page.dart';
-import '../ui/home/test_player.dart';
 import '../ui/settings/settings_page.dart';
 
 enum AppRoutes {
   home(name: 'home', path: '/'),
-  settings(name: 'settings', path: '/settings'),
-  testPlayer(name: 'testPlayer', path: '/test-player');
+  settings(name: 'settings', path: '/settings');
 
   final String name;
   final String path;
@@ -33,12 +31,6 @@ class AppRouter {
         name: AppRoutes.settings.name,
         path: AppRoutes.settings.path,
         builder: (context, state) => const SettingsPage(),
-      ),
-
-      GoRoute(
-        name: AppRoutes.testPlayer.name,
-        path: AppRoutes.testPlayer.path,
-        builder: (context, state) => const PlayerTest(),
       ),
     ],
   );
