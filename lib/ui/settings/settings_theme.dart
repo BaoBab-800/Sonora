@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/providers/providers.dart';
+import 'package:sonora/core/theme/theme.dart';
 
 class SettingsTheme extends ConsumerWidget {
   const SettingsTheme({super.key});
@@ -14,28 +15,47 @@ class SettingsTheme extends ConsumerWidget {
 
     return Column(
       children: [
-        Text(context.l10n.theme),
+        Text(
+          context.l10n.theme,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
 
         settings.when(
           loading: () => const CircularProgressIndicator(),
           error: (error, stack) => Text('$error'),
           data: (settings) {
-            return RadioGroup<ThemeMode>(
-              groupValue: settings.themeMode,
-              onChanged: (value) {
-                if (value == null) return;
-                notifier.changeTheme(value);
-              },
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: context.colors.outline),
+              ),
 
-              child: Column(
-                children: [
-                  for (final theme in ThemeMode.values)
-                    RadioListTile<ThemeMode>(
-                      dense: true,
-                      title: Text(theme.label(context.l10n)),
-                      value: theme,
-                    ),
-                ],
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+                clipBehavior: Clip.antiAlias,
+                child: RadioGroup<ThemeMode>(
+                  groupValue: settings.themeMode,
+                  onChanged: (value) {
+                    if (value == null) return;
+                    notifier.changeTheme(value);
+                  },
+
+                  child: Column(
+                    children: [
+                      for (final theme in ThemeMode.values)
+                        RadioListTile<ThemeMode>(
+                          dense: true,
+                          title: Text(theme.label(context.l10n)),
+                          value: theme,
+                        ),
+                    ],
+                  ),
+                ),
               ),
             );
           },
