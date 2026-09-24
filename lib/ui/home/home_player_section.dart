@@ -28,6 +28,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   ControllerState _state = const ControllerState();
   bool _isLoadingLibrary = false;
   bool _isFavorite = false;
+  bool _isSeeking = false;
+  double _seekPosition = 0;
   String? _error;
 
   @override
@@ -168,6 +170,9 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     final maxPosition = duration.inMilliseconds.toDouble();
     final position = _state.position.inMilliseconds.clamp(0, duration.inMilliseconds).toDouble();
     final hasTrack = track != null;
+    final sliderPosition = _isSeeking
+        ? _seekPosition
+        : position;
 
     final isPlaying = _state.status == PlayerStatus.playing;
     return Container(
@@ -252,12 +257,33 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
               ),
 
               child: Slider(
-                value: position,
-                max: maxPosition > 0
-                    ? maxPosition
-                    : 1, onChanged: hasTrack
-                  ? (value) => _run((p) => p.seek(Duration(milliseconds: value.round())))
-                  : null,
+                value: sliderPosition,
+                max: maxPosition > 0 ? maxPosition : 1,
+
+                onChangeStart: (value) {
+                  setState(() {
+                    _isSeeking = true;
+                    _seekPosition = value;
+                  });
+                },
+
+                onChanged: (value) {
+                  setState(() {
+                    _seekPosition = value;
+                  });
+                },
+
+                onChangeEnd: (value) {
+                  setState(() {
+                    _isSeeking = false;
+                  });
+
+                  _run(
+                        (p) => p.seek(
+                      Duration(milliseconds: value.round()),
+                    ),
+                  );
+                },
               ),
             ),
 

@@ -36,16 +36,18 @@ final class PlaybackEngine implements IPlaybackEngine {
   PlaybackEngine() {
     _subscriptions.addAll([
       _player.stream.playing.listen((playing) {
-        if (_state.status == PlayerStatus.completed) return;
-        _updateState(
-          status: playing ? PlayerStatus.playing : PlayerStatus.paused,
+        developer.log(
+          'media_kit playing: $playing',
+          name: 'PlaybackEngine',
         );
-      }),
 
-      _player.stream.buffering.listen((buffering) {
-        if (buffering) {
-          _updateState(status: PlayerStatus.loading);
-        }
+        if (_state.status == PlayerStatus.completed) return;
+
+        _updateState(
+          status: playing
+              ? PlayerStatus.playing
+              : PlayerStatus.paused,
+        );
       }),
 
       _player.stream.position.listen((position) {
@@ -91,10 +93,16 @@ final class PlaybackEngine implements IPlaybackEngine {
   }
 
   @override
-  Future<void> play() => _guard(_player.play, 'Player started');
+  Future<void> play() async {
+    await _guard(_player.play, 'Player started');
+    _updateState(status: PlayerStatus.playing);
+  }
 
   @override
-  Future<void> pause() => _guard(_player.pause, 'Player paused');
+  Future<void> pause() async {
+    await _guard(_player.pause, 'Player paused');
+    _updateState(status: PlayerStatus.paused);
+  }
 
   @override
   Future<void> stop() => _guard(_player.stop, 'Player stopped');
