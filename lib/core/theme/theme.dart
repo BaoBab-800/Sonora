@@ -4,7 +4,7 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   colorScheme: const ColorScheme.light(
     primary: Color(0xFFFF9292),
-    surface: Color(0xFFEFDCDC),
+    surface: Color(0xFFEFEAEA),
     outline: Color(0xFFA3A5AA),
   ),
 
