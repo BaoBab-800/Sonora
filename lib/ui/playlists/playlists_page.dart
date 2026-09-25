@@ -7,6 +7,8 @@ import 'package:sonora/core/theme/theme.dart';
 
 import 'package:sonora/data/playlists/playlist_model.dart';
 
+import 'create_playlist_dialog.dart';
+
 class PlaylistsPage extends ConsumerWidget {
   const PlaylistsPage({super.key});
 
@@ -36,7 +38,10 @@ class PlaylistsPage extends ConsumerWidget {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => showDialog(
+          context: context,
+          builder: (_) => const CreatePlaylistDialog(),
+        ),
         child: const Icon(Icons.add),
       ),
     );

@@ -41,5 +41,11 @@
   "yourFavoriteSongs": "Ваші улюблені пісні",
   "collection": "Колекція",
   "comingSoon": "Скоро з'явитися",
-  "noPlaylistsYet": "Поки що немає плейлистів"
+
+  "noPlaylistsYet": "Поки що немає плейлистів.",
+  "playlistNameEmpty": "Назва плейлиста порожня.",
+  "playlistNameTooLong": "Назва плейлиста занадто довга.",
+  "newPlaylist": "Новий плейлист",
+  "nameThePlaylist": "Назвіть плейлист",
+  "create": "Створити"
 }

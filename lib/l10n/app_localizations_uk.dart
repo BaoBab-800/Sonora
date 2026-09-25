@@ -123,5 +123,20 @@ class AppLocalizationsUk extends AppLocalizations {
   String get comingSoon => 'Скоро з\'явитися';
 
   @override
-  String get noPlaylistsYet => 'Поки що немає плейлистів';
+  String get noPlaylistsYet => 'Поки що немає плейлистів.';
+
+  @override
+  String get playlistNameEmpty => 'Назва плейлиста порожня.';
+
+  @override
+  String get playlistNameTooLong => 'Назва плейлиста занадто довга.';
+
+  @override
+  String get newPlaylist => 'Новий плейлист';
+
+  @override
+  String get nameThePlaylist => 'Назвіть плейлист';
+
+  @override
+  String get create => 'Створити';
 }

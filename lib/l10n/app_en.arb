@@ -41,5 +41,11 @@
   "yourFavoriteSongs": "Your favorite songs",
   "collection": "Collection",
   "comingSoon": "Coming soon...",
-  "noPlaylistsYet": "No playlists yet"
+
+  "noPlaylistsYet": "No playlists yet.",
+  "playlistNameEmpty": "Playlist name empty.",
+  "playlistNameTooLong": "Playlist name too long.",
+  "newPlaylist": "New playlist",
+  "nameThePlaylist": "Name the playlist",
+  "create": "Create"
 }

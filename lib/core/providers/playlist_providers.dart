@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sonora/data/playlists/playlist_model.dart';
 
 import 'package:sonora/services/playlist/platlist_repository.dart';
+import 'package:sonora/services/playlist/playlist_controller.dart';
 
 import 'storage_providers.dart';
 import 'track_providers.dart';
@@ -28,4 +29,10 @@ final playlistsStreamProvider = StreamProvider<List<Playlist>>((ref) {
     controller.close();
   });
   return controller.stream;
+});
+
+final playlistControllerProvider = Provider<PlaylistController>((ref) {
+  return PlaylistController(
+    ref.watch(playlistRepositoryProvider),
+  );
 });

@@ -326,8 +326,38 @@ abstract class AppLocalizations {
   /// No description provided for @noPlaylistsYet.
   ///
   /// In en, this message translates to:
-  /// **'No playlists yet'**
+  /// **'No playlists yet.'**
   String get noPlaylistsYet;
+
+  /// No description provided for @playlistNameEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist name empty.'**
+  String get playlistNameEmpty;
+
+  /// No description provided for @playlistNameTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist name too long.'**
+  String get playlistNameTooLong;
+
+  /// No description provided for @newPlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'New playlist'**
+  String get newPlaylist;
+
+  /// No description provided for @nameThePlaylist.
+  ///
+  /// In en, this message translates to:
+  /// **'Name the playlist'**
+  String get nameThePlaylist;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

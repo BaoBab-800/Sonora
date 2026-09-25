@@ -123,5 +123,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comingSoon => 'Coming soon...';
 
   @override
-  String get noPlaylistsYet => 'No playlists yet';
+  String get noPlaylistsYet => 'No playlists yet.';
+
+  @override
+  String get playlistNameEmpty => 'Playlist name empty.';
+
+  @override
+  String get playlistNameTooLong => 'Playlist name too long.';
+
+  @override
+  String get newPlaylist => 'New playlist';
+
+  @override
+  String get nameThePlaylist => 'Name the playlist';
+
+  @override
+  String get create => 'Create';
 }
