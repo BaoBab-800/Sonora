@@ -52,7 +52,7 @@
   "moveUp": "Перемістити вгору",
   "moveDown": "Перемістити вниз",
   "delete": "Видалити",
-  "deletePlaylistTitle": "Видалення списку відтворення",
+  "deletePlaylistTitle": "Видалення плейлиста",
   "deletePlaylistConfirm": "Ви впевнені, що хочете видалити плейлист {playlist}?",
   "@deletePlaylistConfirm": {
     "description": "Підтвердження видалення плейлиста",

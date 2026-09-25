@@ -153,7 +153,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get delete => 'Видалити';
 
   @override
-  String get deletePlaylistTitle => 'Видалення списку відтворення';
+  String get deletePlaylistTitle => 'Видалення плейлиста';
 
   @override
   String deletePlaylistConfirm(String playlist) {
