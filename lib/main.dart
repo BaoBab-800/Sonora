@@ -37,7 +37,7 @@ Future<void> main() async {
     ),
   );
 
-  await Hive.initFlutter();
+  await Hive.initFlutter('Sonora');
 
   Hive.registerAdapter(track.TrackAdapter());
   Hive.registerAdapter(playlist.PlaylistAdapter());
