@@ -1,0 +1,4 @@
+enum PlaylistError {
+  nameEmpty,
+  nameTooLong,
+}
