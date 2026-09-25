@@ -139,4 +139,30 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get create => 'Створити';
+
+  @override
+  String get editName => 'Редагувати назву';
+
+  @override
+  String get moveUp => 'Перемістити вгору';
+
+  @override
+  String get moveDown => 'Перемістити вниз';
+
+  @override
+  String get delete => 'Видалити';
+
+  @override
+  String get deletePlaylistTitle => 'Видалення списку відтворення';
+
+  @override
+  String deletePlaylistConfirm(String playlist) {
+    return 'Ви впевнені, що хочете видалити плейлист $playlist?';
+  }
+
+  @override
+  String get newPlaylistName => 'Нова назва плейлиста';
+
+  @override
+  String get save => 'Зберегти';
 }

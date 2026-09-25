@@ -358,6 +358,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create'**
   String get create;
+
+  /// No description provided for @editName.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit name'**
+  String get editName;
+
+  /// No description provided for @moveUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Move up'**
+  String get moveUp;
+
+  /// No description provided for @moveDown.
+  ///
+  /// In en, this message translates to:
+  /// **'Move down'**
+  String get moveDown;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @deletePlaylistTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a playlist'**
+  String get deletePlaylistTitle;
+
+  /// Confirm playlist deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete the playlist {playlist}?'**
+  String deletePlaylistConfirm(String playlist);
+
+  /// No description provided for @newPlaylistName.
+  ///
+  /// In en, this message translates to:
+  /// **'New playlist name'**
+  String get newPlaylistName;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

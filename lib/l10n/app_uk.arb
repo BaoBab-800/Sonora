@@ -47,5 +47,22 @@
   "playlistNameTooLong": "Назва плейлиста занадто довга.",
   "newPlaylist": "Новий плейлист",
   "nameThePlaylist": "Назвіть плейлист",
-  "create": "Створити"
+  "create": "Створити",
+  "editName": "Редагувати назву",
+  "moveUp": "Перемістити вгору",
+  "moveDown": "Перемістити вниз",
+  "delete": "Видалити",
+  "deletePlaylistTitle": "Видалення списку відтворення",
+  "deletePlaylistConfirm": "Ви впевнені, що хочете видалити плейлист {playlist}?",
+  "@deletePlaylistConfirm": {
+    "description": "Підтвердження видалення плейлиста",
+    "placeholders": {
+      "playlist": {
+        "type": "String",
+        "description": "Відображає назву плейлиста, що видаляється"
+      }
+    }
+  },
+  "newPlaylistName": "Нова назва плейлиста",
+  "save": "Зберегти"
 }

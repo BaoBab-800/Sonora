@@ -6,8 +6,10 @@ import 'package:sonora/core/providers/playlist_providers.dart';
 import 'package:sonora/core/theme/theme.dart';
 
 import 'package:sonora/data/playlists/playlist_model.dart';
+import 'package:sonora/data/playlists/playlist_actions.dart';
 
 import 'create_playlist_dialog.dart';
+import 'edit_playlist_name_dialog.dart';
 
 class PlaylistsPage extends ConsumerWidget {
   const PlaylistsPage({super.key});
@@ -65,13 +67,84 @@ class _PlaylistTile extends ConsumerWidget {
         ],
       ),
 
-      trailing: IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.more_vert),
+      trailing: PopupMenuButton<PlaylistActions>(
+        onSelected: (action) => _handleAction(context, ref, action),
+
+        itemBuilder: (context) {
+          return [
+            PopupMenuItem(
+              value: PlaylistActions.editName,
+              child: Text(context.l10n.editName),
+            ),
+
+            PopupMenuItem(
+              value: PlaylistActions.moveUp,
+              child: Text(context.l10n.moveUp),
+            ),
+
+            PopupMenuItem(
+              value: PlaylistActions.moveDown,
+              child: Text(context.l10n.moveDown),
+            ),
+
+            PopupMenuItem(
+              value: PlaylistActions.delete,
+              child: Text(context.l10n.delete),
+            ),
+          ];
+        },
       ),
+
       onTap: () {
         // навигация на экран плейлиста, playlist.id
       },
+    );
+  }
+
+  Future<void> _handleAction(
+      BuildContext context,
+      WidgetRef ref,
+      PlaylistActions action,
+      ) async {
+    switch (action) {
+      case PlaylistActions.delete:
+        await _deletePlaylist(context, ref);
+      case PlaylistActions.editName:
+        await _editPlaylistName(context, ref);
+      case PlaylistActions.moveUp:
+      case PlaylistActions.moveDown:
+      // TODO: реализовать после добавления поля order
+    }
+  }
+
+  Future<void> _deletePlaylist(BuildContext context, WidgetRef ref) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(context.l10n.deletePlaylistTitle),
+        content: Text(context.l10n.deletePlaylistConfirm(playlist.name)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.l10n.close),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(context.l10n.delete),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await ref.read(playlistControllerProvider).deletePlaylist(playlist.id);
+    }
+  }
+
+  Future<void> _editPlaylistName(BuildContext context, WidgetRef ref) async {
+    await showDialog(
+      context: context,
+      builder: (_) => EditPlaylistNameDialog(playlist: playlist),
     );
   }
 }

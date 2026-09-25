@@ -139,4 +139,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get create => 'Create';
+
+  @override
+  String get editName => 'Edit name';
+
+  @override
+  String get moveUp => 'Move up';
+
+  @override
+  String get moveDown => 'Move down';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deletePlaylistTitle => 'Deleting a playlist';
+
+  @override
+  String deletePlaylistConfirm(String playlist) {
+    return 'Are you sure you want to delete the playlist $playlist?';
+  }
+
+  @override
+  String get newPlaylistName => 'New playlist name';
+
+  @override
+  String get save => 'Save';
 }

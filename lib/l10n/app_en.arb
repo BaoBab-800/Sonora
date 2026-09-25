@@ -47,5 +47,22 @@
   "playlistNameTooLong": "Playlist name too long.",
   "newPlaylist": "New playlist",
   "nameThePlaylist": "Name the playlist",
-  "create": "Create"
+  "create": "Create",
+  "editName": "Edit name",
+  "moveUp": "Move up",
+  "moveDown": "Move down",
+  "delete": "Delete",
+  "deletePlaylistTitle": "Deleting a playlist",
+  "deletePlaylistConfirm": "Are you sure you want to delete the playlist {playlist}?",
+  "@deletePlaylistConfirm": {
+    "description": "Confirm playlist deletion",
+    "placeholders": {
+      "playlist": {
+        "type": "String",
+        "description": "Displays the playlist being deleted"
+      }
+    }
+  },
+  "newPlaylistName": "New playlist name",
+  "save": "Save"
 }

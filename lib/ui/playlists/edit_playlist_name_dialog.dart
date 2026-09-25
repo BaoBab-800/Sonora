@@ -8,19 +8,21 @@ import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/providers/playlist_providers.dart';
 
 import 'package:sonora/data/playlists/playlist_error.dart';
+import 'package:sonora/data/playlists/playlist_model.dart';
 
 import 'package:sonora/services/playlist/playlist_controller.dart';
 
-class CreatePlaylistDialog extends ConsumerStatefulWidget {
-  const CreatePlaylistDialog({super.key});
+class EditPlaylistNameDialog extends ConsumerStatefulWidget {
+  final Playlist playlist;
+  const EditPlaylistNameDialog({super.key, required this.playlist});
 
   @override
-  ConsumerState<CreatePlaylistDialog> createState() => _CreatePlaylistDialogState();
+  ConsumerState<EditPlaylistNameDialog> createState() => _EditPlaylistNameDialogState();
 }
 
-class _CreatePlaylistDialogState extends ConsumerState<CreatePlaylistDialog> {
-  final _controller = TextEditingController();
-  String? _errorText;
+class _EditPlaylistNameDialogState extends ConsumerState<EditPlaylistNameDialog> {
+  late final _controller = TextEditingController(text: widget.playlist.name);
+  PlaylistError? _error;
   bool _isSaving = false;
 
   @override
@@ -29,17 +31,19 @@ class _CreatePlaylistDialogState extends ConsumerState<CreatePlaylistDialog> {
     super.dispose();
   }
 
-  Future<void> _sumbit() async {
+  Future<void> _submit() async {
     setState(() {
       _isSaving = true;
-      _errorText = null;
+      _error = null;
     });
 
     try {
-      await ref.read(playlistControllerProvider).createPlaylist(_controller.text);
+      await ref
+          .read(playlistControllerProvider)
+          .renamePlaylist(widget.playlist.id, _controller.text);
       if (mounted) Navigator.of(context).pop();
     } on PlaylistValidationException catch (e) {
-      setState(() => _errorText = _mapError(e.message, context.l10n));
+      setState(() => _error = e.message);
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
@@ -48,16 +52,16 @@ class _CreatePlaylistDialogState extends ConsumerState<CreatePlaylistDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(context.l10n.newPlaylist),
+      title: Text(context.l10n.editName),
       content: TextField(
         controller: _controller,
         autofocus: true,
         decoration: InputDecoration(
-          hintText: context.l10n.nameThePlaylist,
+          hintText: context.l10n.newPlaylistName,
           hintStyle: TextStyle(color: context.colors.outline),
-          errorText: _errorText,
+          errorText: _error == null ? null : _mapError(_error!, context.l10n),
         ),
-        onSubmitted: (_) => _isSaving ? null : _sumbit(),
+        onSubmitted: (_) => _isSaving ? null : _submit(),
       ),
 
       actions: [
@@ -65,15 +69,14 @@ class _CreatePlaylistDialogState extends ConsumerState<CreatePlaylistDialog> {
           onPressed: _isSaving ? null : () => Navigator.of(context).pop(),
           child: Text(context.l10n.close),
         ),
-        
         FilledButton(
-          onPressed: _isSaving ? null : _sumbit,
+          onPressed: _isSaving ? null : _submit,
           child: _isSaving
               ? const SizedBox(
             width: 16,
             height: 16,
             child: CircularProgressIndicator(strokeWidth: 2),
-          ) : Text(context.l10n.create),
+          ) : Text(context.l10n.save),
         ),
       ],
     );

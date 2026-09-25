@@ -25,4 +25,27 @@ class PlaylistController extends ChangeNotifier {
     notifyListeners();
     return playlist;
   }
+
+  Future<void> renamePlaylist(String playlistId, String rawName) async {
+    final name = rawName.trim();
+
+    if (name.isEmpty) {
+      throw PlaylistValidationException(PlaylistError.nameEmpty);
+    }
+    if (name.length > 100) {
+      throw PlaylistValidationException(PlaylistError.nameTooLong);
+    }
+
+    final playlist = _repo.getById(playlistId);
+    if (playlist == null) return;
+
+    playlist.name = name;
+    playlist.updatedAt = DateTime.now();
+    await playlist.save();
+  }
+
+  Future<void> deletePlaylist(String playlistId) async {
+    await _repo.delete(playlistId);
+    notifyListeners();
+  }
 }
