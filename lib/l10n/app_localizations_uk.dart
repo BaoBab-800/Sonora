@@ -12,6 +12,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get denchik => 'Денчик';
 
   @override
+  String get menu => 'Меню';
+
+  @override
   String get settings => 'Налаштування';
 
   @override
