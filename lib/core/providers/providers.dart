@@ -1,11 +1,14 @@
-import 'package:hive/hive.dart';
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:sonora/app/app_bootstrap.dart' as bootstrap;
 
 import 'package:sonora/data/settings/settings_model.dart';
 import 'package:sonora/data/player_controller/controller_state.dart';
 import 'package:sonora/data/player_controller/track.dart';
+import 'package:sonora/data/playlists/playlist_model.dart';
 
 import 'package:sonora/services/storage/i_key_value_storage.dart';
 import 'package:sonora/services/storage/hive_key_value_storage.dart';
@@ -26,6 +29,8 @@ import 'package:sonora/services/source_resolver/i_source_resolver.dart';
 
 import 'package:sonora/services/track_loader/track_loader_service.dart';
 import 'package:sonora/services/track_loader/track_repository.dart';
+
+import 'package:sonora/services/playlist/platlist_repository.dart';
 
 final storageBoxProvider = Provider<Box<dynamic>>((ref) {
   return Hive.box<dynamic>('storage');
@@ -77,6 +82,30 @@ final trackLoaderServiceProvider = Provider<TrackLoaderService>((ref) {
     ref.watch(deviceMusicRepositoryProvider),
     ref.watch(trackRepositoryProvider),
   );
+});
+
+final playlistBoxProvider = Provider<Box<Playlist>>((ref) {
+  return Hive.box<Playlist>('playlists');
+});
+
+final playlistRepositoryProvider = Provider<PlaylistRepository>((ref) {
+  return PlaylistRepository(
+    ref.watch(playlistBoxProvider),
+    ref.watch(trackRepositoryProvider),
+  );
+});
+
+final playlistsStreamProvider = StreamProvider<List<Playlist>>((ref) {
+  final box = ref.watch(playlistBoxProvider);
+  final controller = StreamController<List<Playlist>>();
+  void emit() => controller.add(box.values.toList());
+  emit();
+  box.listenable().addListener(emit);
+  ref.onDispose(() {
+    box.listenable().removeListener(emit);
+    controller.close();
+  });
+  return controller.stream;
 });
 
 final aggregatedPlayerStatesProvider = StreamProvider<Map<String, ControllerState>>((ref) {
