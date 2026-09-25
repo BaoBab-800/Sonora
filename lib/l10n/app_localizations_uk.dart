@@ -121,4 +121,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get comingSoon => 'Скоро з\'явитися';
+
+  @override
+  String get noPlaylistsYet => 'Поки що немає плейлистів';
 }

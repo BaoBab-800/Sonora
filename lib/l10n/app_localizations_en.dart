@@ -121,4 +121,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get comingSoon => 'Coming soon...';
+
+  @override
+  String get noPlaylistsYet => 'No playlists yet';
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sonora/app/app_router.dart';
+
 import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/theme/theme.dart';
 
@@ -136,6 +138,7 @@ class _LibraryPanel extends StatelessWidget {
           icon: Icons.queue_music_rounded,
           label: context.l10n.playlists,
           note: context.l10n.allYourPlaylists,
+          route: AppRoutes.playlistsPage,
         ),
 
         SizedBox(height: 12),
@@ -143,6 +146,7 @@ class _LibraryPanel extends StatelessWidget {
           icon: Icons.mic_none_rounded,
           label: context.l10n.artists,
           note: context.l10n.allYourArtists,
+          route: AppRoutes.playlistsPage,
         ),
 
         SizedBox(height: 12),
@@ -150,6 +154,7 @@ class _LibraryPanel extends StatelessWidget {
           icon: Icons.favorite_border_rounded,
           label: context.l10n.favorite,
           note: context.l10n.yourFavoriteSongs,
+          route: AppRoutes.playlistsPage,
         ),
       ],
     );
@@ -161,64 +166,72 @@ class _LibraryCard extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.note,
+    required this.route,
   });
 
   final IconData icon;
   final String label;
   final String note;
+  final AppRoutes route;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: context.colors.outline),
-      ),
+    return GestureDetector(
+      onTap: () {
+        Navigation(context).pushRoute(route);
+      },
 
-      child: Row(
-        children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: context.colors.outline,
-              borderRadius: BorderRadius.circular(11),
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: context.colors.outline),
+        ),
+
+        child: Row(
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: context.colors.outline,
+                borderRadius: BorderRadius.circular(11),
+              ),
+
+              child: Icon(
+                icon,
+                color: const Color(0xffd3d5d8),
+              ),
             ),
 
-            child: Icon(
-              icon,
-              color: const Color(0xffd3d5d8),
-            ),
-          ),
+            const SizedBox(width: 13),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-          const SizedBox(width: 13),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                Text(
-                  label,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
 
-                const SizedBox(height: 3),
-                Text(
-                  note,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Color(0xff8e9197),
-                    fontSize: 12,
+                  const SizedBox(height: 3),
+                  Text(
+                    note,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Color(0xff8e9197),
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

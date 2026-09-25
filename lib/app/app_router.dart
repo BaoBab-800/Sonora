@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../ui/home/home_page.dart';
+import '../ui/playlists/playlists_page.dart';
 import '../ui/settings/settings_page.dart';
 
 enum AppRoutes {
   home(name: 'home', path: '/'),
+  playlistsPage(name: 'playlistsPage', path: '/playlists-page'),
   settings(name: 'settings', path: '/settings');
 
   final String name;
@@ -25,6 +27,12 @@ class AppRouter {
         name: AppRoutes.home.name,
         path: AppRoutes.home.path,
         builder: (context, state) => const HomePage(),
+      ),
+
+      GoRoute(
+        name: AppRoutes.playlistsPage.name,
+        path: AppRoutes.playlistsPage.path,
+        builder: (context, state) => const PlaylistsPage(),
       ),
 
       GoRoute(

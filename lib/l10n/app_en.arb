@@ -40,5 +40,6 @@
   "favorite": "Favorite",
   "yourFavoriteSongs": "Your favorite songs",
   "collection": "Collection",
-  "comingSoon": "Coming soon..."
+  "comingSoon": "Coming soon...",
+  "noPlaylistsYet": "No playlists yet"
 }

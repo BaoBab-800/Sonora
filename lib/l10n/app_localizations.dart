@@ -322,6 +322,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming soon...'**
   String get comingSoon;
+
+  /// No description provided for @noPlaylistsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No playlists yet'**
+  String get noPlaylistsYet;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

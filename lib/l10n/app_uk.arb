@@ -40,5 +40,6 @@
   "favorite": "Вибране",
   "yourFavoriteSongs": "Ваші улюблені пісні",
   "collection": "Колекція",
-  "comingSoon": "Скоро з'явитися"
+  "comingSoon": "Скоро з'явитися",
+  "noPlaylistsYet": "Поки що немає плейлистів"
 }
