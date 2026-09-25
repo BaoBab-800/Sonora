@@ -8,7 +8,7 @@ import 'package:audio_service/audio_service.dart';
 import 'app/sonora_app.dart';
 import 'app/app_bootstrap.dart' as bootstrap;
 
-import 'core/providers/providers.dart';
+import 'core/providers/player_providers.dart';
 
 import 'data/playlists/playlist_model.dart' as playlist;
 import 'data/player_controller/track.dart' as track;

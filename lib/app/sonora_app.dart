@@ -5,7 +5,7 @@ import 'app_router.dart';
 
 import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/l10n/l10n.dart';
-import 'package:sonora/core/providers/providers.dart';
+import 'package:sonora/core/providers/settings_providers.dart';
 
 class SonoraApp extends ConsumerWidget {
   const SonoraApp({super.key});

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sonora/core/l10n/l10n.dart';
-import 'package:sonora/core/providers/providers.dart';
 import 'package:sonora/core/theme/theme.dart';
+import 'package:sonora/core/providers/settings_providers.dart';
 
 class SettingsLocale extends ConsumerWidget {
   const SettingsLocale({super.key});
