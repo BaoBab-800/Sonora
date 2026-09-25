@@ -5,6 +5,7 @@ import 'package:sonora/app/app_bootstrap.dart' as bootstrap;
 
 import 'package:sonora/data/settings/settings_model.dart';
 import 'package:sonora/data/player_controller/controller_state.dart';
+import 'package:sonora/data/player_controller/track.dart';
 
 import 'package:sonora/services/storage/i_key_value_storage.dart';
 import 'package:sonora/services/storage/hive_key_value_storage.dart';
@@ -18,11 +19,13 @@ import 'package:sonora/services/player_controller/player_controller.dart';
 
 import 'package:sonora/services/playback_engine/playback_engine.dart';
 
-import 'package:sonora/services/device_music_repository/i_device_music_repository.dart';
 import 'package:sonora/services/device_music_repository/device_music_repository.dart';
 
 import 'package:sonora/services/source_resolver/local_file_source_resolver.dart';
 import 'package:sonora/services/source_resolver/i_source_resolver.dart';
+
+import 'package:sonora/services/track_loader/track_loader_service.dart';
+import 'package:sonora/services/track_loader/track_repository.dart';
 
 final storageBoxProvider = Provider<Box<dynamic>>((ref) {
   return Hive.box<dynamic>('storage');
@@ -55,9 +58,24 @@ final trackSourceResolverProvider = Provider<TrackSourceResolver>((ref) {
   return LocalFileSourceResolver();
 });
 
-final deviceMusicRepositoryProvider = Provider<IDeviceMusicRepository>((ref) {
+final deviceMusicRepositoryProvider = Provider<DeviceMusicRepository>((ref) {
   return DeviceMusicRepository(
     resolver: ref.watch(trackSourceResolverProvider),
+  );
+});
+
+final trackBoxProvider = Provider<Box<Track>>((ref) {
+  return Hive.box<Track>('tracks');
+});
+
+final trackRepositoryProvider = Provider<TrackRepository>((ref) {
+  return TrackRepository(ref.watch(trackBoxProvider));
+});
+
+final trackLoaderServiceProvider = Provider<TrackLoaderService>((ref) {
+  return TrackLoaderService(
+    ref.watch(deviceMusicRepositoryProvider),
+    ref.watch(trackRepositoryProvider),
   );
 });
 

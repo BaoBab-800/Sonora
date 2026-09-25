@@ -44,9 +44,7 @@ final class DeviceMusicRepository implements IDeviceMusicRepository {
       source: resolvedSource,
       title: song.title,
       artist: song.artist,
-      duration: song.duration != null
-          ? Duration(milliseconds: song.duration!)
-          : null,
+      durationMs: song.duration,
     );
   }
 }

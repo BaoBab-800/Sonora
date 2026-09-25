@@ -10,6 +10,9 @@ import 'app/app_bootstrap.dart' as bootstrap;
 
 import 'core/providers/providers.dart';
 
+import 'data/playlists/playlist_model.dart' as playlist;
+import 'data/player_controller/track.dart' as track;
+
 import 'services/audio_handler/audio_handler.dart';
 import 'services/player_controller/i_player_controller.dart';
 
@@ -35,7 +38,13 @@ Future<void> main() async {
   );
 
   await Hive.initFlutter();
+
+  Hive.registerAdapter(track.TrackAdapter());
+  Hive.registerAdapter(playlist.PlaylistAdapter());
+
   await Hive.openBox<dynamic>('storage');
+  await Hive.openBox<track.Track>('tracks');
+  await Hive.openBox<playlist.Playlist>('playlists');
 
   runApp(
     UncontrolledProviderScope(

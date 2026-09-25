@@ -1,18 +1,31 @@
-import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
 
-@immutable
-class Track {
+part 'track.g.dart';
+
+@HiveType(typeId: 1)
+class Track extends HiveObject {
+  @HiveField(0)
   final String id;
-  final String source;
-  final String title;
-  final String? artist;
-  final Duration? duration;
 
-  const Track({
+  @HiveField(1)
+  final String source;
+
+  @HiveField(2)
+  final String title;
+
+  @HiveField(3)
+  final String? artist;
+
+  @HiveField(4)
+  final int? durationMs;
+
+  Duration? get duration => durationMs != null ? Duration(milliseconds: durationMs!) : null;
+
+  Track({
     required this.id,
     required this.source,
     required this.title,
     this.artist,
-    this.duration,
+    this.durationMs,
   });
 }

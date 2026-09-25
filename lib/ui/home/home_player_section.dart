@@ -87,7 +87,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
       _error = null;
     });
     try {
-      final tracks = await ref.read(deviceMusicRepositoryProvider).loadSongs();
+      final tracks = await ref.read(trackLoaderServiceProvider).loadAndPersist();
       if (tracks.isEmpty) {
         if (mounted) setState(() => _error = context.l10n.noAudioTracksFoundOnTheDevice);
         return;
