@@ -22,13 +22,14 @@ class PlaylistAdapter extends TypeAdapter<Playlist> {
       trackIds: (fields[2] as List?)?.cast<String>(),
       createdAt: fields[3] as DateTime?,
       updatedAt: fields[4] as DateTime?,
+      order: fields[5] == null ? 0 : fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Playlist obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class PlaylistAdapter extends TypeAdapter<Playlist> {
       ..writeByte(3)
       ..write(obj.createdAt)
       ..writeByte(4)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(5)
+      ..write(obj.order);
   }
 
   @override

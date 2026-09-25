@@ -112,8 +112,9 @@ class _PlaylistTile extends ConsumerWidget {
       case PlaylistActions.editName:
         await _editPlaylistName(context, ref);
       case PlaylistActions.moveUp:
+        await ref.read(playlistControllerProvider).movePlaylist(playlist.id, up: true);
       case PlaylistActions.moveDown:
-      // TODO: реализовать после добавления поля order
+        await ref.read(playlistControllerProvider).movePlaylist(playlist.id, up: false);
     }
   }
 

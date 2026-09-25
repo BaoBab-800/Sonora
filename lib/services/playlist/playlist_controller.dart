@@ -20,9 +20,9 @@ class PlaylistController extends ChangeNotifier {
     if (name.isEmpty) throw PlaylistValidationException(PlaylistError.nameEmpty);
     if (name.length > 100) throw PlaylistValidationException(PlaylistError.nameTooLong);
 
-    final playlist = Playlist.create(name: name);
+    final maxOrder = _repo.getAll().fold<int>(-1, (max, p) => p.order > max ? p.order : max);
+    final playlist = Playlist.create(name: name, order: maxOrder + 1);
     await _repo.save(playlist);
-    notifyListeners();
     return playlist;
   }
 
@@ -42,6 +42,25 @@ class PlaylistController extends ChangeNotifier {
     playlist.name = name;
     playlist.updatedAt = DateTime.now();
     await playlist.save();
+  }
+
+  Future<void> movePlaylist(String playlistId, {required bool up}) async {
+    final playlists = _repo.getAll()..sort((a, b) => a.order.compareTo(b.order));
+    final index = playlists.indexWhere((p) => p.id == playlistId);
+    if (index == -1) return;
+
+    final targetIndex = up ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= playlists.length) return;
+
+    final current = playlists[index];
+    final target = playlists[targetIndex];
+
+    final tempOrder = current.order;
+    current.order = target.order;
+    target.order = tempOrder;
+
+    await current.save();
+    await target.save();
   }
 
   Future<void> deletePlaylist(String playlistId) async {

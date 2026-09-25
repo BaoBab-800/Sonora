@@ -20,19 +20,24 @@ class Playlist extends HiveObject {
   @HiveField(4)
   DateTime? updatedAt;
 
+  @HiveField(5, defaultValue: 0)
+  int order;
+
   Playlist({
     required this.id,
     required this.name,
     List<String>? trackIds,
     DateTime? createdAt,
     this.updatedAt,
+    required this.order,
   })  : trackIds = trackIds ?? [],
         createdAt = createdAt ?? DateTime.now();
 
-  factory Playlist.create({required String name}) {
+  factory Playlist.create({required String name, required int order}) {
     return Playlist(
       id: const Uuid().v4(),
       name: name,
+      order: order,
       createdAt: DateTime.now(),
     );
   }

@@ -21,13 +21,18 @@ final playlistRepositoryProvider = Provider<PlaylistRepository>((ref) {
 final playlistsStreamProvider = StreamProvider<List<Playlist>>((ref) {
   final box = ref.watch(playlistBoxProvider);
   final controller = StreamController<List<Playlist>>();
-  void emit() => controller.add(box.values.toList());
+  void emit() {
+    final sorted = box.values.toList()..sort((a, b) => a.order.compareTo(b.order));
+    controller.add(sorted);
+  }
+
   emit();
   box.listenable().addListener(emit);
   ref.onDispose(() {
     box.listenable().removeListener(emit);
     controller.close();
   });
+
   return controller.stream;
 });
 
