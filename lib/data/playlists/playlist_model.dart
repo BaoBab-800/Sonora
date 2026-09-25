@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 part 'playlist_model.g.dart';
 
@@ -27,4 +28,12 @@ class Playlist extends HiveObject {
     this.updatedAt,
   })  : trackIds = trackIds ?? [],
         createdAt = createdAt ?? DateTime.now();
+
+  factory Playlist.create({required String name}) {
+    return Playlist(
+      id: const Uuid().v4(),
+      name: name,
+      createdAt: DateTime.now(),
+    );
+  }
 }
