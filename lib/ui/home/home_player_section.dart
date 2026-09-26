@@ -15,6 +15,8 @@ import 'package:sonora/data/player_engine/player_status.dart';
 
 import 'package:sonora/services/player_controller/i_player_controller.dart';
 
+import '../playlists/add_to_playlist_sheet.dart';
+
 class HomePlayerSection extends ConsumerStatefulWidget {
   const HomePlayerSection({super.key});
 
@@ -447,6 +449,21 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 ],
 
                 const Spacer(),
+                Builder(
+                  builder: (context) {
+                    final currentTrack = track;
+                    return IconButton(
+                      icon: const Icon(Icons.playlist_add),
+                      onPressed: currentTrack == null
+                          ? null
+                          : () => showModalBottomSheet(
+                        context: context,
+                        builder: (_) => AddToPlaylistSheet(track: currentTrack),
+                      ),
+                    );
+                  },
+                ),
+
                 IconButton(
                   tooltip: context.l10n.addToFavorites,
                   onPressed: hasTrack
@@ -498,6 +515,14 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 ),
 
                 subtitle: Text(track.artist ?? context.l10n.unknownArtist),
+
+                trailing: IconButton(
+                  icon: const Icon(Icons.playlist_add),
+                  onPressed: () => showModalBottomSheet(
+                    context: context,
+                    builder: (_) => AddToPlaylistSheet(track: track),
+                  ),
+                ),
 
                 onTap: () {
                   Navigator.pop(context);

@@ -14,7 +14,7 @@ class PlaylistController extends ChangeNotifier {
   final PlaylistRepository _repo;
   PlaylistController(this._repo);
 
-  Future<Playlist> createPlaylist(String rawName) async {
+  Future<Playlist> createPlaylist(String rawName, {String? initialTrackId}) async {
     final name = rawName.trim();
 
     if (name.isEmpty) throw PlaylistValidationException(PlaylistError.nameEmpty);
@@ -22,7 +22,13 @@ class PlaylistController extends ChangeNotifier {
 
     final maxOrder = _repo.getAll().fold<int>(-1, (max, p) => p.order > max ? p.order : max);
     final playlist = Playlist.create(name: name, order: maxOrder + 1);
+
     await _repo.save(playlist);
+
+    if (initialTrackId != null) {
+      await _repo.addTrack(playlist.id, initialTrackId);
+    }
+
     return playlist;
   }
 
@@ -67,4 +73,8 @@ class PlaylistController extends ChangeNotifier {
     await _repo.delete(playlistId);
     notifyListeners();
   }
+
+  Future<void> addTrack(String playlistId, String trackId) => _repo.addTrack(playlistId, trackId);
+
+  Future<void> removeTrack(String playlistId, String trackId) => _repo.removeTrack(playlistId, trackId);
 }

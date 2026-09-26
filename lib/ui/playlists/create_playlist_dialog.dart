@@ -8,11 +8,13 @@ import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/providers/playlist_providers.dart';
 
 import 'package:sonora/data/playlists/playlist_error.dart';
+import 'package:sonora/data/player_controller/track.dart';
 
 import 'package:sonora/services/playlist/playlist_controller.dart';
 
 class CreatePlaylistDialog extends ConsumerStatefulWidget {
-  const CreatePlaylistDialog({super.key});
+  final Track? initialTrack;
+  const CreatePlaylistDialog({super.key, this.initialTrack});
 
   @override
   ConsumerState<CreatePlaylistDialog> createState() => _CreatePlaylistDialogState();
@@ -36,7 +38,10 @@ class _CreatePlaylistDialogState extends ConsumerState<CreatePlaylistDialog> {
     });
 
     try {
-      await ref.read(playlistControllerProvider).createPlaylist(_controller.text);
+      await ref.read(playlistControllerProvider).createPlaylist(
+        _controller.text,
+        initialTrackId: widget.initialTrack?.id,
+      );
       if (mounted) Navigator.of(context).pop();
     } on PlaylistValidationException catch (e) {
       setState(() => _errorText = _mapError(e.message, context.l10n));
