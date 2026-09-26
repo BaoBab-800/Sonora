@@ -165,4 +165,10 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get save => 'Зберегти';
+
+  @override
+  String get playlistNotFound => 'Плейліст не знайдено';
+
+  @override
+  String get playlistIsEmpty => 'Плейліст порожній';
 }

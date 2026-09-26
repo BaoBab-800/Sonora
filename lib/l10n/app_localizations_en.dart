@@ -165,4 +165,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get playlistNotFound => 'Platlist not found';
+
+  @override
+  String get playlistIsEmpty => 'Playlist is empty';
 }

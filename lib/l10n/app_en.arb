@@ -64,5 +64,7 @@
     }
   },
   "newPlaylistName": "New playlist name",
-  "save": "Save"
+  "save": "Save",
+  "playlistNotFound": "Platlist not found",
+  "playlistIsEmpty": "Playlist is empty"
 }

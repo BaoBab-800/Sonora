@@ -64,5 +64,7 @@
     }
   },
   "newPlaylistName": "Нова назва плейлиста",
-  "save": "Зберегти"
+  "save": "Зберегти",
+  "playlistNotFound": "Плейліст не знайдено",
+  "playlistIsEmpty": "Плейліст порожній"
 }

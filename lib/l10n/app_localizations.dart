@@ -406,6 +406,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @playlistNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Platlist not found'**
+  String get playlistNotFound;
+
+  /// No description provided for @playlistIsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist is empty'**
+  String get playlistIsEmpty;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -10,6 +10,7 @@ import 'package:sonora/data/playlists/playlist_actions.dart';
 
 import 'create_playlist_dialog.dart';
 import 'edit_playlist_name_dialog.dart';
+import 'playlist_detail_page.dart';
 
 class PlaylistsPage extends ConsumerWidget {
   const PlaylistsPage({super.key});
@@ -96,7 +97,10 @@ class _PlaylistTile extends ConsumerWidget {
       ),
 
       onTap: () {
-        // навигация на экран плейлиста, playlist.id
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => PlaylistDetailPage(playlistId: playlist.id)),
+        );
       },
     );
   }
