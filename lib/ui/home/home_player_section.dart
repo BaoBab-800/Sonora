@@ -27,7 +27,6 @@ class HomePlayerSection extends ConsumerStatefulWidget {
 class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   StreamSubscription<ControllerState>? _playerSubscription;
   StreamSubscription<Map<String, ControllerState>>? _managerSubscription;
-  String? _selectedPlayerId;
   ControllerState _state = const ControllerState();
   bool _isLoadingLibrary = false;
   bool _isFavorite = false;
@@ -38,13 +37,14 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   @override
   void initState() {
     super.initState();
-    _managerSubscription = ref.read(playerManagerProvider).stateStream.listen((_) {
-      if (mounted) setState(() {});
-    });
+    final initialId = ref.read(selectedPlayerIdProvider);
+    if (initialId != null) {
+      _selectPlayer(initialId);
+    }
   }
 
   IPlayerController? get _controller {
-    final id = _selectedPlayerId;
+    final id = ref.watch(selectedPlayerIdProvider);
     return id == null ? null : ref.read(playerManagerProvider).getPlayer(id);
   }
 
@@ -59,7 +59,6 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     final player = ref.read(playerManagerProvider).getPlayer(id);
     if (player == null || !mounted) return;
     setState(() {
-      _selectedPlayerId = id;
       _state = player.state;
     });
     _playerSubscription = player.stateStream.listen((state) {
@@ -68,14 +67,14 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   }
 
   Future<void> _removeSelectedPlayer() async {
-    final id = _selectedPlayerId;
+    final id = ref.watch(selectedPlayerIdProvider);
     if (id == null) return;
     await _playerSubscription?.cancel();
     _playerSubscription = null;
     await ref.read(playerManagerProvider).removePlayer(id);
     if (!mounted) return;
     setState(() {
-      _selectedPlayerId = null;
+      ref.read(selectedPlayerIdProvider.notifier).state = null;
       _state = const ControllerState();
     });
     final remaining = ref.read(playerManagerProvider).playerIds;
@@ -126,7 +125,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
           width: 420,
           child: _PlayerList(
             playerIds: ref.read(playerManagerProvider).playerIds,
-            selectedId: _selectedPlayerId,
+            selectedId: ref.watch(selectedPlayerIdProvider),
             states: _playerStates(),
 
             onSelect: (id) async {
@@ -168,6 +167,12 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<String?>(selectedPlayerIdProvider, (previous, next) {
+      if (next != null && next != previous) {
+        _selectPlayer(next);
+      }
+    });
+
     final track = _state.currentTrack;
     final duration = _state.duration ?? track?.duration ?? Duration.zero;
     final maxPosition = duration.inMilliseconds.toDouble();
@@ -243,7 +248,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
 
                 IconButton(
                   tooltip: context.l10n.removeCurrentPlayer,
-                  onPressed: _selectedPlayerId == null ? null : _removeSelectedPlayer,
+                  onPressed: ref.watch(selectedPlayerIdProvider) == null ? null : _removeSelectedPlayer,
                   icon: const Icon(Icons.delete_outline),
                 ),
               ],

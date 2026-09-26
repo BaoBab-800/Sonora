@@ -28,7 +28,10 @@ class PlayerManager {
 
   PlayerManager({required IPlayerController Function(String id) controllerFactory}) : _controllerFactory = controllerFactory;
 
-  Stream<Map<String, ControllerState>> get stateStream => _aggregatedController.stream;
+  Stream<Map<String, ControllerState>> get stateStream async* {
+    yield Map.unmodifiable(_lastStates);
+    yield* _aggregatedController.stream;
+  }
   List<String> get playerIds => List.unmodifiable(_players.keys);
 
   IPlayerController createPlayer() {

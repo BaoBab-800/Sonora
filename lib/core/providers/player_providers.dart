@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
 import 'package:sonora/data/player_controller/controller_state.dart';
 
@@ -6,6 +7,8 @@ import 'package:sonora/services/player_manager/player_manager.dart';
 import 'package:sonora/services/player_controller/i_player_controller.dart';
 import 'package:sonora/services/player_controller/player_controller.dart';
 import 'package:sonora/services/playback_engine/playback_engine.dart';
+
+final selectedPlayerIdProvider = StateProvider<String?>((ref) => null);
 
 final playerManagerProvider = Provider<PlayerManager>((ref) {
   final manager = PlayerManager(
