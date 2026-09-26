@@ -43,14 +43,14 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     }
   }
 
-  IPlayerController? get _controller {
-    final id = ref.watch(selectedPlayerIdProvider);
-    return id == null ? null : ref.read(playerManagerProvider).getPlayer(id);
+  IPlayerController? _currentPlayer() {
+    final id = ref.read(selectedPlayerIdProvider);
+    return id == null ? null : ref.read(playerControllerProvider(id));
   }
 
   Future<void> _createPlayer({bool loadLibrary = false}) async {
     final player = ref.read(playerManagerProvider).createPlayer();
-    await _selectPlayer(player.id);
+    ref.read(selectedPlayerIdProvider.notifier).state = player.id;
     if (loadLibrary) await _loadDeviceMusic();
   }
 
@@ -67,23 +67,35 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   }
 
   Future<void> _removeSelectedPlayer() async {
-    final id = ref.watch(selectedPlayerIdProvider);
+    final id = ref.read(selectedPlayerIdProvider);
     if (id == null) return;
+
     await _playerSubscription?.cancel();
     _playerSubscription = null;
     await ref.read(playerManagerProvider).removePlayer(id);
     if (!mounted) return;
+
     setState(() {
       ref.read(selectedPlayerIdProvider.notifier).state = null;
       _state = const ControllerState();
     });
+
     final remaining = ref.read(playerManagerProvider).playerIds;
-    if (remaining.isNotEmpty) await _selectPlayer(remaining.first);
+    if (remaining.isNotEmpty) {
+      ref.read(selectedPlayerIdProvider.notifier).state = remaining.first;
+    }
   }
 
   Future<void> _loadDeviceMusic() async {
     if (_isLoadingLibrary) return;
-    if (_controller == null) await _createPlayer();
+
+    var playerId = ref.read(selectedPlayerIdProvider);
+    if (playerId == null) {
+      final player = ref.read(playerManagerProvider).createPlayer();
+      ref.read(selectedPlayerIdProvider.notifier).state = player.id;
+      playerId = player.id;
+    }
+
     setState(() {
       _isLoadingLibrary = true;
       _error = null;
@@ -94,7 +106,9 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
         if (mounted) setState(() => _error = context.l10n.noAudioTracksFoundOnTheDevice);
         return;
       }
-      await _controller!.setQueue(tracks);
+      final player = ref.read(playerControllerProvider(playerId));
+      if (player == null) return;
+      await player.setQueue(tracks);
     } catch (error) {
       if (mounted) setState(() => _error = '${context.l10n.failedToLoadTheMediaLibrary}: $error');
     } finally {
@@ -103,7 +117,9 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   }
 
   Future<void> _run(Future<void> Function(IPlayerController player) action) async {
-    final player = _controller;
+    final playerId = ref.read(selectedPlayerIdProvider);
+    final player = playerId != null ? ref.read(playerControllerProvider(playerId)) : null;
+
     if (player == null) {
       setState(() => _error = context.l10n.createAPlayerToStartPlayback);
       return;
@@ -128,9 +144,9 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
             selectedId: ref.watch(selectedPlayerIdProvider),
             states: _playerStates(),
 
-            onSelect: (id) async {
+            onSelect: (id) {
               Navigator.pop(context);
-              await _selectPlayer(id);
+              ref.read(selectedPlayerIdProvider.notifier).state = id;
             },
 
             onCreate: () async {
@@ -368,7 +384,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
               children: [
                 IconButton.outlined(
                   onPressed: hasTrack
-                      ? () => _controller?.setShuffle(!_state.shuffleEnabled)
+                      ? () => _currentPlayer()?.setShuffle(!_state.shuffleEnabled)
                       : null,
                   icon: Icon(
                     _state.shuffleEnabled
@@ -493,7 +509,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
 
   void _cycleRepeat() {
     const modes = repeat.RepeatMode.values;
-    _controller?.setRepeatMode(modes[(_state.repeatMode.index + 1) % modes.length]);
+    _currentPlayer()?.setRepeatMode(modes[(_state.repeatMode.index + 1) % modes.length]);
   }
 
   Future<void> _showQueueDialog(List<Track> tracks) {
