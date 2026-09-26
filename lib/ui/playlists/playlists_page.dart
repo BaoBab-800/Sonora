@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/providers/playlist_providers.dart';
-import 'package:sonora/core/theme/theme.dart';
 
 import 'package:sonora/data/playlists/playlist_model.dart';
 import 'package:sonora/data/playlists/playlist_actions.dart';
@@ -20,7 +20,14 @@ class PlaylistsPage extends ConsumerWidget {
     final playlistsAsync = ref.watch(playlistsStreamProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.playlists)),
+      appBar: AppBar(
+        title: Text(
+          context.l10n.playlists,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
 
       body: playlistsAsync.when(
         data: (playlists) {
@@ -58,14 +65,35 @@ class _PlaylistTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
-      title: Row(
-        children: [
-          Text(playlist.name),
-          const SizedBox(width: 6),
-          Icon(Icons.circle, color: context.colors.outline, size: 8),
-          const SizedBox(width: 6),
-          Text('${playlist.trackIds.length}'),
-        ],
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      leading: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: context.colors.primaryContainer,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(
+          Icons.queue_music,
+          color: context.colors.onPrimaryContainer,
+        ),
+      ),
+
+      title: Text(
+        playlist.name,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+
+      subtitle: Text(
+        context.l10n.numberOfTracks(playlist.trackIds.length),
+        style: TextStyle(
+          color: Colors.grey,
+        ),
       ),
 
       trailing: PopupMenuButton<PlaylistActions>(

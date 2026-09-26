@@ -66,5 +66,15 @@
   "newPlaylistName": "New playlist name",
   "save": "Save",
   "playlistNotFound": "Platlist not found",
-  "playlistIsEmpty": "Playlist is empty"
+  "playlistIsEmpty": "Playlist is empty",
+  "numberOfTracks": "Number of tracks: {number}",
+  "@numberOfTracks": {
+    "description": "Number of tracks",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "description": "Shows the number of tracks in the playlist"
+      }
+    }
+  }
 }

@@ -171,4 +171,9 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get playlistIsEmpty => 'Плейліст порожній';
+
+  @override
+  String numberOfTracks(int number) {
+    return 'Кількість треків: $number';
+  }
 }

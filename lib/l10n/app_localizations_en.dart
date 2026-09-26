@@ -171,4 +171,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playlistIsEmpty => 'Playlist is empty';
+
+  @override
+  String numberOfTracks(int number) {
+    return 'Number of tracks: $number';
+  }
 }

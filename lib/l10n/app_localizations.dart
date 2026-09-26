@@ -418,6 +418,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Playlist is empty'**
   String get playlistIsEmpty;
+
+  /// Number of tracks
+  ///
+  /// In en, this message translates to:
+  /// **'Number of tracks: {number}'**
+  String numberOfTracks(int number);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

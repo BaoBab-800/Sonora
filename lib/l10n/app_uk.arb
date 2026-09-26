@@ -66,5 +66,15 @@
   "newPlaylistName": "Нова назва плейлиста",
   "save": "Зберегти",
   "playlistNotFound": "Плейліст не знайдено",
-  "playlistIsEmpty": "Плейліст порожній"
+  "playlistIsEmpty": "Плейліст порожній",
+  "numberOfTracks": "Кількість треків: {number}",
+  "@numberOfTracks": {
+    "description": "Кількість треків",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "description": "Показує кількість треків у плейлисте"
+      }
+    }
+  }
 }
