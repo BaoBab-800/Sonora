@@ -22,18 +22,25 @@ class AddToPlaylistSheet extends ConsumerWidget {
         data: (playlists) => ListView(
           shrinkWrap: true,
           children: [
-            ListTile(
-              leading: const Icon(Icons.add),
-              title: Text(context.l10n.newPlaylist),
-              onTap: () async {
+            ElevatedButton(
+              onPressed: () async {
                 Navigator.pop(context);
                 await showDialog(
                   context: context,
                   builder: (_) => CreatePlaylistDialog(initialTrack: track),
                 );
               },
+
+              child: Row(
+                children: [
+                  const Icon(Icons.add),
+                  const SizedBox(width: 6),
+                  Text(context.l10n.newPlaylist),
+                ],
+              ),
             ),
-            const Divider(height: 1),
+
+            const SizedBox(height: 4),
             for (final playlist in playlists)
               _PlaylistCheckTile(playlist: playlist, track: track),
           ],
