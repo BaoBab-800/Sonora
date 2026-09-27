@@ -22,6 +22,7 @@ abstract interface class IPlayerController {
   Future<void> next();
   Future<void> previous();
   Future<void> skipTo(int index);
+  Future<void> moveTrack(int oldIndex, int newIndex);
   void setRepeatMode(RepeatMode mode);
   void setShuffle(bool enabled);
 

@@ -533,13 +533,21 @@ class _QueueDialogContent extends ConsumerWidget {
     return stateAsync.when(
       data: (state) {
         final tracks = state?.queue ?? const [];
+
         return SizedBox(
           width: 480,
-          child: ListView.builder(
+          child:  ReorderableListView.builder(
             shrinkWrap: true,
             itemCount: tracks.length,
+            onReorderItem: (oldIndex, newIndex) {
+              final id = ref.read(selectedPlayerIdProvider);
+              if (id == null) return;
+              ref.read(playerControllerProvider(id))?.moveTrack(oldIndex, newIndex);
+            },
+
             itemBuilder: (_, index) {
               final track = tracks[index];
+
               return Dismissible(
                 key: ValueKey(track.id),
                 direction: DismissDirection.endToStart,

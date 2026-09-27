@@ -251,6 +251,30 @@ class PlayerController implements IPlayerController {
   }
 
   @override
+  Future<void> moveTrack(int oldIndex, int newIndex) async {
+    if (oldIndex == newIndex) return;
+    if (oldIndex < 0 || oldIndex >= _queue.tracks.length) return;
+    if (newIndex < 0 || newIndex >= _queue.tracks.length) return;
+
+    final newTracks = List<Track>.of(_queue.tracks);
+    final track = newTracks.removeAt(oldIndex);
+    newTracks.insert(newIndex, track);
+
+    int adjustCurrentIndex(int current) {
+      if (current == oldIndex) return newIndex;
+      if (oldIndex < current && newIndex >= current) return current - 1;
+      if (oldIndex > current && newIndex <= current) return current + 1;
+      return current;
+    }
+
+    _queue = _queue.copyWith(
+      tracks: newTracks,
+      currentIndex: adjustCurrentIndex(_queue.currentIndex),
+    );
+    _emit();
+  }
+
+  @override
   void setRepeatMode(RepeatMode mode) {
     _queue = _queue.copyWith(repeatMode: mode);
     _emit();
