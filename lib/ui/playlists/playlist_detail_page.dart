@@ -5,6 +5,9 @@ import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/providers/playlist_providers.dart';
 import 'package:sonora/core/providers/player_providers.dart';
+import 'package:sonora/core/providers/track_providers.dart';
+
+import 'package:sonora/data/player_controller/track.dart';
 
 import 'package:sonora/services/player_controller/i_player_controller.dart';
 
@@ -25,7 +28,11 @@ class PlaylistDetailPage extends ConsumerWidget {
           );
         }
 
-        final tracks = ref.watch(playlistTracksProvider(playlist));
+        final trackRepo = ref.watch(trackRepositoryProvider);
+        final tracks = playlist.trackIds
+            .map(trackRepo.getById)
+            .whereType<Track>()
+            .toList();
 
         return Scaffold(
           body: CustomScrollView(
@@ -34,7 +41,7 @@ class PlaylistDetailPage extends ConsumerWidget {
                 title: Text(
                   playlist.name,
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
 
@@ -57,7 +64,9 @@ class PlaylistDetailPage extends ConsumerWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          const SizedBox(height: 22),
                           Icon(Icons.queue_music, size: 48, color: context.colors.onPrimaryContainer),
+
                           const SizedBox(height: 8),
                           Text(
                             context.l10n.numberOfTracks(tracks.length),
