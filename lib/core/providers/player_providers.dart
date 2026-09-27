@@ -44,3 +44,18 @@ final controllerStateProvider = StreamProvider.family<ControllerState, String>((
   }
   return controller.stateStream;
 });
+
+final currentPlayerStateProvider = StreamProvider<ControllerState?>((ref) {
+  final id = ref.watch(selectedPlayerIdProvider);
+  if (id == null) return Stream.value(null);
+
+  final player = ref.watch(playerControllerProvider(id));
+  if (player == null) return Stream.value(null);
+
+  return _withInitialState(player);
+});
+
+Stream<ControllerState> _withInitialState(IPlayerController player) async* {
+  yield player.state;
+  yield* player.stateStream;
+}

@@ -463,7 +463,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 if (_state.queue.isNotEmpty) ...[
                   const SizedBox(height: 12),
                   TextButton.icon(
-                    onPressed: () => _showQueueDialog(_state.queue),
+                    onPressed: () => _showQueueDialog(),
                     icon: const Icon(Icons.queue_music),
                     label: Text('${context.l10n.queue} · ${_state.queueLength}'),
                   ),
@@ -512,47 +512,85 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     _currentPlayer()?.setRepeatMode(modes[(_state.repeatMode.index + 1) % modes.length]);
   }
 
-  Future<void> _showQueueDialog(List<Track> tracks) {
+  Future<void> _showQueueDialog() {
     return showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(context.l10n.queue),
-        content: SizedBox(
+        content: const _QueueDialogContent(),
+      ),
+    );
+  }
+}
+
+class _QueueDialogContent extends ConsumerWidget {
+  const _QueueDialogContent();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final stateAsync = ref.watch(currentPlayerStateProvider);
+
+    return stateAsync.when(
+      data: (state) {
+        final tracks = state?.queue ?? const [];
+        return SizedBox(
           width: 480,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: tracks.length,
-
             itemBuilder: (_, index) {
               final track = tracks[index];
-              return ListTile(
-                selected: index == _state.currentIndex,
-
-                leading: Text('${index + 1}'),
-
-                title: Text(
-                  track.title, maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              return Dismissible(
+                key: ValueKey(track.id),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 20),
+                  child: const Icon(Icons.delete, color: Colors.white),
                 ),
 
-                subtitle: Text(track.artist ?? context.l10n.unknownArtist),
-
-                trailing: IconButton(
-                  icon: const Icon(Icons.playlist_add),
-                  onPressed: () => showModalBottomSheet(
-                    context: context,
-                    builder: (_) => AddToPlaylistSheet(track: track),
-                  ),
-                ),
-
-                onTap: () {
-                  Navigator.pop(context);
-                  _run((player) => player.skipTo(index));
+                onDismissed: (_) {
+                  final id = ref.read(selectedPlayerIdProvider);
+                  if (id == null) return;
+                  ref.read(playerControllerProvider(id))?.removeFromQueue(track.id);
                 },
+
+                child: ListTile(
+                  selected: index == state?.currentIndex,
+                  leading: Text('${index + 1}'),
+                  title: Text(track.title, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  subtitle: Text(track.artist ?? context.l10n.unknownArtist),
+
+                  trailing: IconButton(
+                    icon: const Icon(Icons.playlist_add),
+                    onPressed: () => showModalBottomSheet(
+                      context: context,
+                      builder: (_) => AddToPlaylistSheet(track: track),
+                    ),
+                  ),
+
+                  onTap: () {
+                    Navigator.pop(context);
+                    final id = ref.read(selectedPlayerIdProvider);
+                    if (id == null) return;
+                    ref.read(playerControllerProvider(id))?.skipTo(index);
+                  },
+                ),
               );
             },
           ),
-        ),
+        );
+      },
+
+      loading: () => const Padding(
+        padding: EdgeInsets.all(24),
+        child: Center(child: CircularProgressIndicator()),
+      ),
+
+      error: (error, stack) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Text('$error'),
       ),
     );
   }
