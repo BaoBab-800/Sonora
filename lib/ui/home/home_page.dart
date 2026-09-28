@@ -48,8 +48,6 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 24),
                   _LibraryPanel(),
                 ],
-                const SizedBox(height: 24),
-                const _CollectionSection(),
               ],
             );
           },
@@ -135,6 +133,14 @@ class _LibraryPanel extends StatelessWidget {
     return Column(
       children: [
         _LibraryCard(
+          icon: Icons.favorite_border_rounded,
+          label: context.l10n.favorite,
+          note: context.l10n.yourFavoriteSongs,
+          route: AppRoutes.playlistsPage,
+        ),
+
+        SizedBox(height: 12),
+        _LibraryCard(
           icon: Icons.queue_music_rounded,
           label: context.l10n.playlists,
           note: context.l10n.allYourPlaylists,
@@ -146,14 +152,6 @@ class _LibraryPanel extends StatelessWidget {
           icon: Icons.mic_none_rounded,
           label: context.l10n.artists,
           note: context.l10n.allYourArtists,
-          route: AppRoutes.playlistsPage,
-        ),
-
-        SizedBox(height: 12),
-        _LibraryCard(
-          icon: Icons.favorite_border_rounded,
-          label: context.l10n.favorite,
-          note: context.l10n.yourFavoriteSongs,
           route: AppRoutes.playlistsPage,
         ),
       ],
@@ -232,79 +230,6 @@ class _LibraryCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _CollectionSection extends StatelessWidget {
-  const _CollectionSection();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: context.colors.outline),
-      ),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.library_music_outlined, size: 19),
-              const SizedBox(width: 9),
-              Text(
-                context.l10n.collection,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontWeight: FontWeight.w700),
-              ),
-
-              const Spacer(),
-              const Text(
-                'RECENTLY ADDED',
-                style: TextStyle(
-                  color: Color(0xff888b91),
-                  fontSize: 10,
-                  letterSpacing: 1.2,
-                ),
-              )
-            ],
-          ),
-
-          const SizedBox(height: 20),
-          Container(height: 1, color: const Color(0xFF303237)),
-
-          const SizedBox(height: 17),
-          Row(
-            children: [
-              const Icon(
-                Icons.album_outlined,
-                color: Color(0xFF777A80),
-              ),
-
-              const SizedBox(width: 13),
-              Expanded(
-                child: Text(
-                  context.l10n.comingSoon,
-                  style: TextStyle(
-                    color: Color(0xFFAEB0B5),
-                  ),
-                ),
-              ),
-
-              const Icon(
-                Icons.arrow_forward_rounded,
-                color: Color(0xFF777A80),
-              )
-            ],
-          ),
-        ],
       ),
     );
   }
