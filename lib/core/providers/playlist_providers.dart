@@ -11,6 +11,8 @@ import 'package:sonora/services/playlist/playlist_controller.dart';
 import 'storage_providers.dart';
 import 'track_providers.dart';
 
+typedef PlaylistSnapshot = ({String id, String name, List<String> trackIds});
+
 final playlistRepositoryProvider = Provider<PlaylistRepository>((ref) {
   return PlaylistRepository(
     ref.watch(playlistBoxProvider),
@@ -36,15 +38,22 @@ final playlistsStreamProvider = StreamProvider<List<Playlist>>((ref) {
   return controller.stream;
 });
 
-final playlistByIdProvider = StreamProvider.family<Playlist?, String>((ref, playlistId) {
+final playlistByIdProvider = StreamProvider.family<PlaylistSnapshot?, String>((ref, playlistId) {
   final box = ref.watch(playlistBoxProvider);
-  final controller = StreamController<Playlist?>();
-  void emit() => controller.add(box.get(playlistId));
+  final listenable = box.listenable();
+  final controller = StreamController<PlaylistSnapshot?>();
+
+  void emit() {
+    final p = box.get(playlistId);
+    controller.add(
+      p == null ? null : (id: p.id, name: p.name, trackIds: List.of(p.trackIds)),
+    );
+  }
 
   emit();
-  box.listenable().addListener(emit);
+  listenable.addListener(emit);
   ref.onDispose(() {
-    box.listenable().removeListener(emit);
+    listenable.removeListener(emit);
     controller.close();
   });
   return controller.stream;

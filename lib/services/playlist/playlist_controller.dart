@@ -77,4 +77,16 @@ class PlaylistController extends ChangeNotifier {
   Future<void> addTrack(String playlistId, String trackId) => _repo.addTrack(playlistId, trackId);
 
   Future<void> removeTrack(String playlistId, String trackId) => _repo.removeTrack(playlistId, trackId);
+
+  Future<void> reorderTrack(String playlistId, int oldIndex, int newIndex) async {
+    final playlist = _repo.getById(playlistId);
+    if (playlist == null) return;
+    if (oldIndex < 0 || oldIndex >= playlist.trackIds.length) return;
+    if (newIndex < 0 || newIndex >= playlist.trackIds.length) return;
+
+    final id = playlist.trackIds.removeAt(oldIndex);
+    playlist.trackIds.insert(newIndex, id);
+    playlist.updatedAt = DateTime.now();
+    await playlist.save();
+  }
 }
