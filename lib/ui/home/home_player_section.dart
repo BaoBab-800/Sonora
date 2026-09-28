@@ -723,30 +723,45 @@ class _PlayerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      if (playerIds.isEmpty)
-        Padding(
-          padding: const EdgeInsets.all(12),
-          child: Text(context.l10n.thePlayersHaveNotYetBeenCreated),
-        ),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxHeight: 400),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (playerIds.isEmpty)
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(
+                context.l10n.thePlayersHaveNotYetBeenCreated,
+              ),
+            )
+          else Flexible(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: playerIds.length,
+              itemBuilder: (context, index) {
+                final id = playerIds[index];
+                final state = states[id];
 
-      ...playerIds.map((id) {
-        final state = states[id];
-        return ListTile(
-          selected: id == selectedId,
-          leading: const CircleAvatar(child: Icon(Icons.music_note)),
-          title: Text(state?.currentTrack?.title ?? context.l10n.newPlayer),
-          subtitle: Text('ID: ${id.substring(0, 8)}'),
-          onTap: () => onSelect(id),
-        );
-      }),
+                return ListTile(
+                  selected: id == selectedId,
+                  leading: const CircleAvatar(child: Icon(Icons.music_note)),
+                  title: Text(state?.currentTrack?.title ?? context.l10n.newPlayer),
+                  subtitle: Text('ID: ${id.substring(0, 8)}'),
+                  onTap: () => onSelect(id),
+                );
+              },
+            ),
+          ),
 
-      const SizedBox(height: 8),
-      FilledButton.icon(
-        onPressed: onCreate,
-        icon: const Icon(Icons.add),
-        label: Text(context.l10n.createPlayer),
+          const SizedBox(height: 8),
+          FilledButton.icon(
+            onPressed: onCreate,
+            icon: const Icon(Icons.add),
+            label: Text(context.l10n.createPlayer),
+          ),
+        ],
       ),
-    ]);
+    );
   }
 }
