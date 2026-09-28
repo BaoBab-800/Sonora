@@ -136,7 +136,7 @@ class _LibraryPanel extends StatelessWidget {
           icon: Icons.favorite_border_rounded,
           label: context.l10n.favorite,
           note: context.l10n.yourFavoriteSongs,
-          route: AppRoutes.playlistsPage,
+          route: AppRoutes.favoritePage,
         ),
 
         SizedBox(height: 12),
