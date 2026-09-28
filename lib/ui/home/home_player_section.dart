@@ -197,6 +197,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     final sliderPosition = _isSeeking
         ? _seekPosition
         : position;
+    final isRepeatEnabled = _state.repeatMode != repeat.RepeatMode.none;
 
     final isPlaying = _state.status == PlayerStatus.playing;
     return Container(
@@ -386,18 +387,34 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   onPressed: hasTrack
                       ? () => _currentPlayer()?.setShuffle(!_state.shuffleEnabled)
                       : null,
-                  icon: Icon(
-                    _state.shuffleEnabled
-                        ? Icons.shuffle_on
-                        : Icons.shuffle,
+                  style: IconButton.styleFrom(
+                    foregroundColor: _state.shuffleEnabled
+                        ? context.colors.primary
+                        : null,
+                    side: BorderSide(
+                      color: _state.shuffleEnabled
+                          ? context.colors.primary
+                          : context.colors.outline,
+                    ),
                   ),
+                  icon: const Icon(Icons.shuffle),
                 ),
 
                 const SizedBox(width: 8),
+
                 IconButton.outlined(
-                  onPressed: hasTrack
-                      ? _cycleRepeat
-                      : null,
+                  onPressed: hasTrack ? _cycleRepeat : null,
+                  style: IconButton.styleFrom(
+                    foregroundColor: isRepeatEnabled
+                        ? context.colors.primary
+                        : null,
+                    side: BorderSide(
+                      color: isRepeatEnabled
+                          ? context.colors.primary
+                          : context.colors.outline,
+                    ),
+                  ),
+
                   icon: Icon(
                     _state.repeatMode == repeat.RepeatMode.one
                         ? Icons.repeat_one

@@ -1,5 +1,5 @@
 enum RepeatMode {
   none,
-  one,
   all,
+  one,
 }
