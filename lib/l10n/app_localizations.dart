@@ -424,6 +424,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Number of tracks: {number}'**
   String numberOfTracks(int number);
+
+  /// No description provided for @noFavoriteTracks.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorite tracks'**
+  String get noFavoriteTracks;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -176,4 +176,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String numberOfTracks(int number) {
     return 'Кількість треків: $number';
   }
+
+  @override
+  String get noFavoriteTracks => 'Немає улюблених треків';
 }

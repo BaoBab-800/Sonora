@@ -76,5 +76,6 @@
         "description": "Shows the number of tracks in the playlist"
       }
     }
-  }
+  },
+  "noFavoriteTracks": "No favorite tracks"
 }

@@ -57,10 +57,16 @@ class _PlaylistDetailView extends ConsumerWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _PlaylistHeader(
+          PlaylistHeader(
             name: playlist.name,
             trackCount: tracks.length,
+            icon: Icon(
+              Icons.queue_music,
+              size: 48,
+              color: context.colors.onPrimaryContainer,
+            ),
           ),
+
           _PlaylistTrackList(
             playlistId: playlist.id,
             tracks: tracks,
@@ -71,13 +77,16 @@ class _PlaylistDetailView extends ConsumerWidget {
   }
 }
 
-class _PlaylistHeader extends StatelessWidget {
+class PlaylistHeader extends StatelessWidget {
   final String name;
   final int trackCount;
+  final Widget icon;
 
-  const _PlaylistHeader({
+  const PlaylistHeader({
+    super.key,
     required this.name,
     required this.trackCount,
+    required this.icon,
   });
 
   @override
@@ -111,12 +120,8 @@ class _PlaylistHeader extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 22),
-                Icon(
-                  Icons.queue_music,
-                  size: 48,
-                  color: context.colors.onPrimaryContainer,
-                ),
+                const SizedBox(height: 26),
+                icon,
 
                 const SizedBox(height: 8),
                 Text(
@@ -175,30 +180,44 @@ class _PlaylistTrackList extends ConsumerWidget {
       itemBuilder: (context, index) {
         final track = tracks[index];
 
-        return _PlaylistTrackTile(
+        return PlaylistTrackTile(
           key: ValueKey(track.id),
-          playlistId: playlistId,
           track: track,
           index: index,
+          showIndex: true,
           tracks: tracks,
+          trailing: ReorderableDragStartListener(
+            index: index,
+            child: const Icon(Icons.drag_handle),
+          ),
+          onDismissed: () {
+            ref.read(playlistControllerProvider).removeTrack(
+              playlistId,
+              track.id,
+            );
+          },
         );
       },
     );
   }
 }
 
-class _PlaylistTrackTile extends ConsumerWidget {
-  final String playlistId;
+class PlaylistTrackTile extends ConsumerWidget {
   final Track track;
   final int index;
+  final bool showIndex;
   final List<Track> tracks;
+  final VoidCallback onDismissed;
+  final Widget? trailing;
 
-  const _PlaylistTrackTile({
+  const PlaylistTrackTile({
     super.key,
-    required this.playlistId,
     required this.track,
     required this.index,
+    required this.showIndex,
     required this.tracks,
+    required this.onDismissed,
+    this.trailing,
   });
 
   @override
@@ -207,31 +226,38 @@ class _PlaylistTrackTile extends ConsumerWidget {
       key: ValueKey(track.id),
       direction: DismissDirection.endToStart,
       background: const _DeleteBackground(),
-      onDismissed: (_) => ref.read(playlistControllerProvider).removeTrack(playlistId, track.id),
+      onDismissed: (_) => onDismissed,
 
       child: ListTile(
-        leading: SizedBox(
+        leading: showIndex
+            ? SizedBox(
           width: 32,
           child: Text(
             '${index + 1}',
             textAlign: TextAlign.center,
           ),
-        ),
+        ) : null,
 
         title: Text(
           track.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
         ),
 
-        subtitle: Text(
-          track.artist ?? context.l10n.unknownArtist,
+        subtitle: Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Text(
+            track.artist ?? context.l10n.unknownArtist,
+            style: TextStyle(
+              fontWeight: FontWeight.w300,
+            ),
+          ),
         ),
 
-        trailing: ReorderableDragStartListener(
-          index: index,
-          child: const Icon(Icons.drag_handle),
-        ),
+        trailing: trailing,
         onTap: () => _playTrack(ref),
       ),
     );
