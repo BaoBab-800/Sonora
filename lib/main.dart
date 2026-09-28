@@ -12,6 +12,7 @@ import 'core/providers/player_providers.dart';
 
 import 'data/playlists/playlist_model.dart' as playlist;
 import 'data/player_controller/track.dart' as track;
+import 'data/favorite/favorite_track.dart';
 
 import 'services/audio_handler/audio_handler.dart';
 import 'services/player_controller/i_player_controller.dart';
@@ -45,6 +46,7 @@ Future<void> main() async {
   await Hive.openBox<dynamic>('storage');
   await Hive.openBox<track.Track>('tracks');
   await Hive.openBox<playlist.Playlist>('playlists');
+  await Hive.openBox<FavoriteTrack>('favorites');
 
   runApp(
     UncontrolledProviderScope(
