@@ -20,3 +20,9 @@ final favoritesRepositoryProvider = Provider<FavoritesRepository>((ref) {
     tracksBox: ref.watch(tracksBoxProvider),
   );
 });
+
+final isFavoriteProvider = StreamProvider.family<bool, String>((ref, trackId) {
+  final repository = ref.watch(favoritesRepositoryProvider);
+
+  return repository.watchIsFavorite(trackId);
+});

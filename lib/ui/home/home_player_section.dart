@@ -7,6 +7,7 @@ import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/providers/player_providers.dart';
 import 'package:sonora/core/providers/track_providers.dart';
+import 'package:sonora/core/providers/favorite_providers.dart';
 
 import 'package:sonora/data/player_controller/controller_state.dart';
 import 'package:sonora/data/player_controller/repeat_mode.dart' as repeat;
@@ -29,7 +30,6 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
   StreamSubscription<Map<String, ControllerState>>? _managerSubscription;
   ControllerState _state = const ControllerState();
   bool _isLoadingLibrary = false;
-  bool _isFavorite = false;
   bool _isSeeking = false;
   double _seekPosition = 0;
   String? _error;
@@ -198,8 +198,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
         ? _seekPosition
         : position;
     final isRepeatEnabled = _state.repeatMode != repeat.RepeatMode.none;
-
     final isPlaying = _state.status == PlayerStatus.playing;
+
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -502,20 +502,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   },
                 ),
 
-                IconButton(
-                  tooltip: context.l10n.addToFavorites,
-                  onPressed: hasTrack
-                      ? () => setState(() => _isFavorite = !_isFavorite)
-                      : null,
-                  icon: Icon(
-                    _isFavorite
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                    color: _isFavorite
-                        ? const Color(0xffd84a4a)
-                        : null,
-                  ),
-                ),
+                if (track != null)
+                  _FavoriteButton(trackId: track.id),
               ],
             ),
           ],
@@ -702,6 +690,40 @@ class _TimeLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '${value.inMinutes.remainder(60).toString().padLeft(2, '0')}:${value.inSeconds.remainder(60).toString().padLeft(2, '0')}',
+    );
+  }
+}
+
+class _FavoriteButton extends ConsumerWidget {
+  final String trackId;
+
+  const _FavoriteButton({
+    required this.trackId,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isFav = ref.watch(isFavoriteProvider(trackId));
+
+    return IconButton(
+      onPressed: () => ref.read(favoritesRepositoryProvider).toggle(trackId),
+      icon: Icon(
+        isFav.when(
+          data: (value) => value
+              ? Icons.favorite
+              : Icons.favorite_border,
+          loading: () => Icons.favorite_border,
+          error: (_, _) => Icons.favorite_border,
+        ),
+
+        color: isFav.when(
+          data: (value) => value
+            ? context.colors.primary
+            : null,
+          loading: () => null,
+          error: (_, _) => null,
+        ),
+      ),
     );
   }
 }

@@ -42,6 +42,7 @@ Future<void> main() async {
 
   Hive.registerAdapter(track.TrackAdapter());
   Hive.registerAdapter(playlist.PlaylistAdapter());
+  Hive.registerAdapter(FavoriteTrackAdapter());
 
   await Hive.openBox<dynamic>('storage');
   await Hive.openBox<track.Track>('tracks');

@@ -48,4 +48,12 @@ class FavoritesRepository {
     if (orphans.isEmpty) return;
     await _favorites.deleteAll(orphans);
   }
+
+  Stream<bool> watchIsFavorite(String trackId) async* {
+    yield isFavorite(trackId);
+
+    await for (final _ in _favorites.watch(key: trackId)) {
+      yield isFavorite(trackId);
+    }
+  }
 }
