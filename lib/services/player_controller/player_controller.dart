@@ -287,24 +287,47 @@ class PlayerController implements IPlayerController {
     final currentId = _queue.currentTrack?.id;
 
     final List<Track> newTracks;
+    int newIndex;
+
     if (enabled) {
       newTracks = List.of(_queue.tracks)..shuffle();
+
+      if (currentId != null) {
+        final currentIndex = newTracks.indexWhere(
+              (track) => track.id == currentId,
+        );
+
+        if (currentIndex != -1) {
+          final currentTrack = newTracks.removeAt(currentIndex);
+          newTracks.insert(0, currentTrack);
+          newIndex = 0;
+        } else {
+          newIndex = -1;
+        }
+      } else {
+        newIndex = -1;
+      }
     } else {
-      final byId = {for (final t in _queue.tracks) t.id: t};
+      final byId = {
+        for (final track in _queue.tracks) track.id: track,
+      };
+
       newTracks = _queue.originalOrder
           .where(byId.containsKey)
           .map((id) => byId[id]!)
           .toList();
-    }
 
-    final newIndex =
-    currentId == null ? -1 : newTracks.indexWhere((t) => t.id == currentId);
+      newIndex = currentId == null
+          ? -1
+          : newTracks.indexWhere((track) => track.id == currentId);
+    }
 
     _queue = _queue.copyWith(
       tracks: newTracks,
       shuffleEnabled: enabled,
       currentIndex: newIndex,
     );
+
     _emit();
   }
 
