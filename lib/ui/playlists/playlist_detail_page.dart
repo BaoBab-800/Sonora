@@ -167,13 +167,10 @@ class _PlaylistTrackList extends ConsumerWidget {
       },
 
       onReorderItem: (oldIndex, newIndex) {
-        final adjustedIndex =
-        newIndex > oldIndex ? newIndex - 1 : newIndex;
-
         ref.read(playlistControllerProvider).reorderTrack(
           playlistId,
           oldIndex,
-          adjustedIndex,
+          newIndex,
         );
       },
 
