@@ -226,7 +226,7 @@ class PlaylistTrackTile extends ConsumerWidget {
       key: ValueKey(track.id),
       direction: DismissDirection.endToStart,
       background: const _DeleteBackground(),
-      onDismissed: (_) => onDismissed,
+      onDismissed: (_) => onDismissed(),
 
       child: ListTile(
         leading: showIndex
@@ -242,7 +242,7 @@ class PlaylistTrackTile extends ConsumerWidget {
           track.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -251,7 +251,7 @@ class PlaylistTrackTile extends ConsumerWidget {
           padding: const EdgeInsets.only(left: 4),
           child: Text(
             track.artist ?? context.l10n.unknownArtist,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w300,
             ),
           ),
