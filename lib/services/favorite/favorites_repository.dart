@@ -32,6 +32,13 @@ class FavoritesRepository {
     return true;
   }
 
+  Future<void> addToFavorite(String trackId) async {
+    await _favorites.put(
+      trackId,
+      FavoriteTrack(trackId: trackId, likedAt: DateTime.now()),
+    );
+  }
+
   FavoritesPlaylist get playlist {
     final entries = _favorites.values
         .where((f) => _tracks.containsKey(f.trackId))

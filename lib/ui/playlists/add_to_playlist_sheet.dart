@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sonora/core/l10n/l10n.dart';
+import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/providers/playlist_providers.dart';
+import 'package:sonora/core/providers/favorite_providers.dart';
 
 import 'package:sonora/data/player_controller/track.dart';
 import 'package:sonora/data/playlists/playlist_model.dart';
@@ -41,6 +43,7 @@ class AddToPlaylistSheet extends ConsumerWidget {
             ),
 
             const SizedBox(height: 4),
+            _FavoriteCheckTile(track: track),
             for (final playlist in playlists)
               _PlaylistCheckTile(playlist: playlist, track: track),
           ],
@@ -54,6 +57,33 @@ class AddToPlaylistSheet extends ConsumerWidget {
           child: Text('$error'),
         ),
       ),
+    );
+  }
+}
+
+class _FavoriteCheckTile extends ConsumerWidget {
+  final Track track;
+  const _FavoriteCheckTile({required this.track});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isInFavorite = ref.watch(isFavoriteProvider(track.id)).value ?? false;
+
+    return ListTile(
+      title: Text(context.l10n.favorite),
+      trailing: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: Icon(
+          isInFavorite
+              ? Icons.favorite
+              : Icons.favorite_border,
+          color: isInFavorite ? context.colors.primary : null,
+        ),
+      ),
+      onTap: () async {
+        final repository = ref.read(favoritesRepositoryProvider);
+        await repository.toggle(track.id);
+      },
     );
   }
 }
