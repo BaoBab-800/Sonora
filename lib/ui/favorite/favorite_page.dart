@@ -15,9 +15,7 @@ class FavoritesPage extends ConsumerWidget {
     final tracks = ref.watch(favoriteTracksProvider);
 
     return Scaffold(
-      body: tracks.isEmpty
-          ? const _EmptyFavorites()
-          : CustomScrollView(
+      body: CustomScrollView(
         slivers: [
           PlaylistHeader(
             name: context.l10n.favorite,
@@ -29,26 +27,30 @@ class FavoritesPage extends ConsumerWidget {
             ),
           ),
 
-          SliverList.builder(
-            itemCount: tracks.length,
-            itemBuilder: (context, index) {
-              final track = tracks[index];
+          if (tracks.isEmpty)
+            const SliverFillRemaining(
+              hasScrollBody: false,
+              child: _EmptyFavorites(),
+            )
+          else
+            SliverList.builder(
+              itemCount: tracks.length,
+              itemBuilder: (context, index) {
+                final track = tracks[index];
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: PlaylistTrackTile(
-                  key: ValueKey(track.id),
-                  track: track,
-                  index: index,
-                  showIndex: false,
-                  tracks: tracks,
-                  onDismissed: () {
-                    ref.read(favoritesRepositoryProvider).toggle(track.id);
-                  },
-                ),
-              );
-            },
-          ),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: PlaylistTrackTile(
+                    key: ValueKey(track.id),
+                    track: track,
+                    index: index,
+                    showIndex: false,
+                    tracks: tracks,
+                    onDismissed: () => ref.read(favoritesRepositoryProvider).toggle(track.id),
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );
