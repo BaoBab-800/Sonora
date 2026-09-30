@@ -219,7 +219,9 @@ class PlaylistTrackTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Dismissible(
       key: ValueKey(track.id),
-      direction: DismissDirection.endToStart,
+      direction: onDismissed == null
+          ? DismissDirection.none
+          : DismissDirection.endToStart,
       background: const _DeleteBackground(),
       onDismissed: (_) => onDismissed?.call(),
 

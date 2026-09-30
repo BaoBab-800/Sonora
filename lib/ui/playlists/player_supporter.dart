@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sonora/core/providers/player_providers.dart';
 
+import 'package:sonora/data/player_controller/controller_state.dart';
+import 'package:sonora/data/player_engine/player_status.dart';
 import 'package:sonora/data/player_controller/track.dart';
 
 import 'package:sonora/services/player_controller/i_player_controller.dart';
@@ -13,8 +15,41 @@ Future<void> playTrack(WidgetRef ref, List<Track> tracks, int index) async {
 
   final player = getPlayer(ref, manager, playerId);
 
-  await player.setQueue(tracks);
-  await player.skipTo(index);
+  await player.setQueue(tracks, startIndex: index);
+  await player.play();
+}
+
+bool hasQueue(ControllerState? state, List<Track> tracks) {
+  final queue = state?.queue;
+  if (queue == null || queue.length != tracks.length) return false;
+
+  for (var index = 0; index < tracks.length; index++) {
+    if (queue[index].id != tracks[index].id) return false;
+  }
+
+  return true;
+}
+
+Future<void> toggleQueuePlayback(
+    WidgetRef ref,
+    List<Track> tracks, {
+      int index = 0,
+    }) async {
+  final manager = ref.read(playerManagerProvider);
+  final playerId = ref.read(selectedPlayerIdProvider);
+  final player = getPlayer(ref, manager, playerId);
+
+  if (hasQueue(player.state, tracks)) {
+    if (player.state.status == PlayerStatus.playing) {
+      await player.pause();
+    } else {
+      await player.play();
+    }
+    return;
+  }
+
+  await player.setQueue(tracks, startIndex: index);
+  await player.play();
 }
 
 IPlayerController getPlayer(

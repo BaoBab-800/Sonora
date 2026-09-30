@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/providers/artists_provider.dart';
+import 'package:sonora/core/providers/player_providers.dart';
+
+import 'package:sonora/data/player_engine/player_status.dart';
 
 import '../playlists/playlist_detail_page.dart';
 import '../playlists/player_supporter.dart';
@@ -16,6 +19,9 @@ class ArtistPlaylist extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final artist = ref.watch(artistProvider(artistKey));
     final tracks = ref.watch(artistTracksProvider(artistKey));
+    final playerState = ref.watch(currentPlayerStateProvider).value;
+    final isArtistQueue = hasQueue(playerState, tracks);
+    final isPlaying = isArtistQueue && playerState?.status == PlayerStatus.playing;
     final theme = Theme.of(context);
 
     final name = artist?.name ?? '';
@@ -70,8 +76,12 @@ class ArtistPlaylist extends ConsumerWidget {
                         child: FilledButton.icon(
                           onPressed: tracks.isEmpty
                               ? null
-                              : () => playTrack(ref, tracks, 0),
-                          icon: const Icon(Icons.play_arrow_rounded),
+                              : () => toggleQueuePlayback(ref, tracks),
+                          icon: Icon(
+                            isPlaying
+                                ? Icons.pause_rounded
+                                : Icons.play_arrow_rounded,
+                          ),
                           label: Text(context.l10n.play),
                         ),
                       ),
