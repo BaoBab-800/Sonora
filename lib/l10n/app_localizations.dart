@@ -430,6 +430,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No favorite tracks'**
   String get noFavoriteTracks;
+
+  /// No description provided for @noArtistsUploadSongs.
+  ///
+  /// In en, this message translates to:
+  /// **'No artists. Upload songs.'**
+  String get noArtistsUploadSongs;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

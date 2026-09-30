@@ -77,5 +77,6 @@
       }
     }
   },
-  "noFavoriteTracks": "Немає улюблених треків"
+  "noFavoriteTracks": "Немає улюблених треків",
+  "noArtistsUploadSongs": "Немає виконавців. Завантажте пісні."
 }

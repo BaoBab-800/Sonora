@@ -179,4 +179,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get noFavoriteTracks => 'Немає улюблених треків';
+
+  @override
+  String get noArtistsUploadSongs => 'Немає виконавців. Завантажте пісні.';
 }

@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 import '../ui/home/home_page.dart';
 import '../ui/favorite/favorite_page.dart';
 import '../ui/playlists/playlists_page.dart';
+import '../ui/atrists/artists_feed.dart';
 import '../ui/settings/settings_page.dart';
 
 enum AppRoutes {
   home(name: 'home', path: '/'),
   favoritePage(name: 'favoritePage', path: '/favorite-page'),
   playlistsPage(name: 'playlistsPage', path: '/playlists-page'),
+  artistsFeed(name: 'artistsFeed', path: '/artists-feed'),
   settings(name: 'settings', path: '/settings');
 
   final String name;
@@ -41,6 +43,12 @@ class AppRouter {
         name: AppRoutes.playlistsPage.name,
         path: AppRoutes.playlistsPage.path,
         builder: (context, state) => const PlaylistsPage(),
+      ),
+
+      GoRoute(
+        name: AppRoutes.artistsFeed.name,
+        path: AppRoutes.artistsFeed.path,
+        builder: (context, state) => const ArtistsFeed(),
       ),
 
       GoRoute(

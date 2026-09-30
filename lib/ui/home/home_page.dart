@@ -152,7 +152,7 @@ class _LibraryPanel extends StatelessWidget {
           icon: Icons.mic_none_rounded,
           label: context.l10n.artists,
           note: context.l10n.allYourArtists,
-          route: AppRoutes.playlistsPage,
+          route: AppRoutes.artistsFeed,
         ),
       ],
     );

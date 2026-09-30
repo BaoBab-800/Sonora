@@ -179,4 +179,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noFavoriteTracks => 'No favorite tracks';
+
+  @override
+  String get noArtistsUploadSongs => 'No artists. Upload songs.';
 }

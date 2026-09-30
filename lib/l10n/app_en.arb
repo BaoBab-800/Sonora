@@ -77,5 +77,6 @@
       }
     }
   },
-  "noFavoriteTracks": "No favorite tracks"
+  "noFavoriteTracks": "No favorite tracks",
+  "noArtistsUploadSongs": "No artists. Upload songs."
 }
