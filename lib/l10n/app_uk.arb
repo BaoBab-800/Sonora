@@ -16,7 +16,7 @@
 
   "localLibary": "ЛОКАЛЬНА БІБЛІОТЕКА",
   "nowPlaying": "ЗАРАЗ ГРАЄ",
-  "tracks": "ПІСЕНЬ",
+  "tracksU": "ТРЕКІВ",
   "noQueue": "НЕМАЄ ЧЕРГИ",
   "selectAPlayer": "Вибрати плеєр",
   "removeCurrentPlayer": "Видалити поточний плеєр",
@@ -78,5 +78,10 @@
     }
   },
   "noFavoriteTracks": "Немає улюблених треків",
-  "noArtistsUploadSongs": "Немає виконавців. Завантажте пісні."
+  "noArtistsUploadSongs": "Немає виконавців. Завантажте пісні.",
+  "tracksL": "Треків",
+  "play": "Грати",
+  "mix": "Перемішати",
+  "track": "Трек",
+  "tracks": "Трека"
 }

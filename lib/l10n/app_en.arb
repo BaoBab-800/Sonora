@@ -16,7 +16,7 @@
 
   "localLibary": "LOCAL LIBARY",
   "nowPlaying": "NOW PLAYING",
-  "tracks": "TRACKS",
+  "tracksU": "TRACKS",
   "noQueue": "NO QUEUE",
   "selectAPlayer": "Select a player",
   "removeCurrentPlayer": "Remove current player",
@@ -78,5 +78,10 @@
     }
   },
   "noFavoriteTracks": "No favorite tracks",
-  "noArtistsUploadSongs": "No artists. Upload songs."
+  "noArtistsUploadSongs": "No artists. Upload songs.",
+  "tracksL": "Tracks",
+  "play": "Play",
+  "mix": "Mix",
+  "track": "Track",
+  "tracks": "Tracks"
 }

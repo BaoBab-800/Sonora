@@ -4,13 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/providers/playlist_providers.dart';
-import 'package:sonora/core/providers/player_providers.dart';
 import 'package:sonora/core/providers/track_providers.dart';
 
 import 'package:sonora/data/player_controller/track.dart';
 
-import 'package:sonora/services/player_controller/i_player_controller.dart';
-import 'package:sonora/services/player_manager/player_manager.dart';
+import 'player_supporter.dart';
 
 class PlaylistDetailPage extends ConsumerWidget {
   final String playlistId;
@@ -204,7 +202,7 @@ class PlaylistTrackTile extends ConsumerWidget {
   final int index;
   final bool showIndex;
   final List<Track> tracks;
-  final VoidCallback onDismissed;
+  final VoidCallback? onDismissed;
   final Widget? trailing;
 
   const PlaylistTrackTile({
@@ -213,7 +211,7 @@ class PlaylistTrackTile extends ConsumerWidget {
     required this.index,
     required this.showIndex,
     required this.tracks,
-    required this.onDismissed,
+    this.onDismissed,
     this.trailing,
   });
 
@@ -223,7 +221,7 @@ class PlaylistTrackTile extends ConsumerWidget {
       key: ValueKey(track.id),
       direction: DismissDirection.endToStart,
       background: const _DeleteBackground(),
-      onDismissed: (_) => onDismissed(),
+      onDismissed: (_) => onDismissed?.call(),
 
       child: ListTile(
         leading: showIndex
@@ -255,45 +253,9 @@ class PlaylistTrackTile extends ConsumerWidget {
         ),
 
         trailing: trailing,
-        onTap: () => _playTrack(ref),
+        onTap: () => playTrack(ref, tracks, index)
       ),
     );
-  }
-
-  Future<void> _playTrack(WidgetRef ref) async {
-    final manager = ref.read(playerManagerProvider);
-    final playerId = ref.read(selectedPlayerIdProvider);
-
-    final player = _getPlayer(ref, manager, playerId);
-
-    await player.setQueue(tracks);
-    await player.skipTo(index);
-  }
-
-  IPlayerController _getPlayer(
-      WidgetRef ref,
-      PlayerManager manager,
-      String? playerId,
-      ) {
-    if (playerId == null) {
-      final player = manager.createPlayer();
-
-      ref.read(selectedPlayerIdProvider.notifier).state = player.id;
-
-      return player;
-    }
-
-    final existingPlayer = manager.getPlayer(playerId);
-
-    if (existingPlayer != null) {
-      return existingPlayer;
-    }
-
-    final player = manager.createPlayer();
-
-    ref.read(selectedPlayerIdProvider.notifier).state = player.id;
-
-    return player;
   }
 }
 

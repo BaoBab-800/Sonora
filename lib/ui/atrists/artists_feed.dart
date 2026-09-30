@@ -33,8 +33,13 @@ class ArtistsFeed extends ConsumerWidget {
             leading: CircleAvatar(
               child: Text(artist.isUnknown ? '?' : artist.name[0].toUpperCase()),
             ),
+
             title: Text(artist.name),
-            subtitle: Text('${artist.trackIds.length} ${context.l10n.tracks}'),
+
+            subtitle: Text(
+              _tracksLabel(context, artist.trackIds.length),
+            ),
+
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => ArtistPlaylist(artistKey: artist.key)),
             ),
@@ -42,5 +47,12 @@ class ArtistsFeed extends ConsumerWidget {
         },
       ),
     );
+  }
+
+  String _tracksLabel(BuildContext context, int n) {
+    final mod10 = n % 10, mod100 = n % 100;
+    if (mod10 == 1 && mod100 != 11) return '$n ${context.l10n.track.toLowerCase()}';
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return '$n ${context.l10n.tracks.toLowerCase()}';
+    return '$n ${context.l10n.tracksL.toLowerCase()}';
   }
 }

@@ -179,11 +179,11 @@ abstract class AppLocalizations {
   /// **'NOW PLAYING'**
   String get nowPlaying;
 
-  /// No description provided for @tracks.
+  /// No description provided for @tracksU.
   ///
   /// In en, this message translates to:
   /// **'TRACKS'**
-  String get tracks;
+  String get tracksU;
 
   /// No description provided for @noQueue.
   ///
@@ -436,6 +436,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No artists. Upload songs.'**
   String get noArtistsUploadSongs;
+
+  /// No description provided for @tracksL.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks'**
+  String get tracksL;
+
+  /// No description provided for @play.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get play;
+
+  /// No description provided for @mix.
+  ///
+  /// In en, this message translates to:
+  /// **'Mix'**
+  String get mix;
+
+  /// No description provided for @track.
+  ///
+  /// In en, this message translates to:
+  /// **'Track'**
+  String get track;
+
+  /// No description provided for @tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks'**
+  String get tracks;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

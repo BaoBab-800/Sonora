@@ -51,7 +51,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get nowPlaying => 'ЗАРАЗ ГРАЄ';
 
   @override
-  String get tracks => 'ПІСЕНЬ';
+  String get tracksU => 'ТРЕКІВ';
 
   @override
   String get noQueue => 'НЕМАЄ ЧЕРГИ';
@@ -182,4 +182,19 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get noArtistsUploadSongs => 'Немає виконавців. Завантажте пісні.';
+
+  @override
+  String get tracksL => 'Треків';
+
+  @override
+  String get play => 'Грати';
+
+  @override
+  String get mix => 'Перемішати';
+
+  @override
+  String get track => 'Трек';
+
+  @override
+  String get tracks => 'Трека';
 }

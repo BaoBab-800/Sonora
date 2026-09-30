@@ -51,7 +51,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nowPlaying => 'NOW PLAYING';
 
   @override
-  String get tracks => 'TRACKS';
+  String get tracksU => 'TRACKS';
 
   @override
   String get noQueue => 'NO QUEUE';
@@ -182,4 +182,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noArtistsUploadSongs => 'No artists. Upload songs.';
+
+  @override
+  String get tracksL => 'Tracks';
+
+  @override
+  String get play => 'Play';
+
+  @override
+  String get mix => 'Mix';
+
+  @override
+  String get track => 'Track';
+
+  @override
+  String get tracks => 'Tracks';
 }

@@ -238,7 +238,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                 Text(
                   _state.queueLength == 0
                       ? context.l10n.noQueue
-                      : '${_state.queueLength.toString().padLeft(2, '0')} ${context.l10n.tracks}',
+                      : '${_state.queueLength.toString().padLeft(2, '0')} ${context.l10n.tracksU}',
                   style: const TextStyle(
                     fontSize: 10,
                     letterSpacing: 1.1,
