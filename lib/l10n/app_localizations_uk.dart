@@ -229,7 +229,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get aboutMultiplePlayers => 'Кілька екземплярів плеєра';
 
   @override
-  String get aboutVersion => 'Версія: ';
+  String aboutVersion(String number) {
+    return 'Версія: ';
+  }
 
   @override
   String get aboutLinks => 'Посилання';
@@ -239,4 +241,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get aboutSupport => 'Підтримати автора';
+
+  @override
+  String get aboutYouFoundSomething => 'Ви щось знайшли...';
 }

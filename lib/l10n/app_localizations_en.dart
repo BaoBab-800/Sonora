@@ -229,7 +229,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutMultiplePlayers => 'Multiple player instances';
 
   @override
-  String get aboutVersion => 'Version: ';
+  String aboutVersion(String number) {
+    return 'Version: ';
+  }
 
   @override
   String get aboutLinks => 'Links';
@@ -239,4 +241,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutSupport => 'A penny for tea';
+
+  @override
+  String get aboutYouFoundSomething => 'You found something...';
 }

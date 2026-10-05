@@ -527,11 +527,11 @@ abstract class AppLocalizations {
   /// **'Multiple player instances'**
   String get aboutMultiplePlayers;
 
-  /// No description provided for @aboutVersion.
+  /// Displays the application version
   ///
   /// In en, this message translates to:
   /// **'Version: '**
-  String get aboutVersion;
+  String aboutVersion(String number);
 
   /// No description provided for @aboutLinks.
   ///
@@ -550,6 +550,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A penny for tea'**
   String get aboutSupport;
+
+  /// No description provided for @aboutYouFoundSomething.
+  ///
+  /// In en, this message translates to:
+  /// **'You found something...'**
+  String get aboutYouFoundSomething;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -96,7 +96,17 @@
   "aboutShuffleRepeat": "Shuffle & repeat",
   "aboutMultiplePlayers": "Multiple player instances",
   "aboutVersion": "Version: ",
+  "@aboutVersion": {
+    "description": "Displays the application version",
+    "placeholders": {
+      "number": {
+        "type": "String",
+        "description": "Displays the application version"
+      }
+    }
+  },
   "aboutLinks": "Links",
   "aboutGithub": "Project GitHub",
-  "aboutSupport": "A penny for tea"
+  "aboutSupport": "A penny for tea",
+  "aboutYouFoundSomething": "You found something..."
 }

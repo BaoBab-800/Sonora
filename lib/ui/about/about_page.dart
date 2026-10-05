@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:sonora/core/l10n/l10n.dart';
 import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/providers/app_providers.dart';
 
-class AboutPage extends StatelessWidget {
+import '../seventh_page/seventh_page.dart';
+
+class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
+
+  @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+  bool _secretUnlocked = false;
+
+  void _unlockSecret() {
+    setState(() {
+      _secretUnlocked = true;
+    });
+  }
+
+  void _openSecret() {
+    if (!_secretUnlocked) return;
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const SeventhPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +75,9 @@ class AboutPage extends StatelessWidget {
             _buildLinksSection(context),
 
             const SizedBox(height: 24),
-            const VersionText(),
+            VersionText(
+              onTap: _secretUnlocked ? _openSecret : null,
+            ),
           ],
         ),
       ),
@@ -87,12 +113,8 @@ class AboutPage extends StatelessWidget {
           ),
 
           const SizedBox(height: 14),
-          Text(
-            'SONORA',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.w800,
-              letterSpacing: 3,
-            ),
+          SonoraLogoText(
+            onSecretUnlocked: _unlockSecret,
           ),
 
           const SizedBox(height: 4),
@@ -203,6 +225,84 @@ class AboutPage extends StatelessWidget {
   }
 }
 
+class SonoraLogoText extends StatefulWidget {
+  final VoidCallback onSecretUnlocked;
+
+  const SonoraLogoText({
+    super.key,
+    required this.onSecretUnlocked,
+  });
+
+  @override
+  State<SonoraLogoText> createState() => _SonoraLogoTextState();
+}
+
+class _SonoraLogoTextState extends State<SonoraLogoText> {
+  int _tapCount = 0;
+  bool _isAnimating = false;
+
+  void _onTap() {
+    _tapCount++;
+
+    if (_tapCount >= 7) {
+      _tapCount = 0;
+      _playEasterEgg();
+    }
+
+    setState(() {});
+  }
+
+  Future<void> _playEasterEgg() async {
+    setState(() {
+      _isAnimating = true;
+    });
+
+    widget.onSecretUnlocked();
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    if (!mounted) return;
+
+    setState(() {
+      _isAnimating = false;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          context.l10n.aboutYouFoundSomething,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+
+        backgroundColor: context.colors.primary,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _onTap,
+      child: AnimatedScale(
+        scale: _isAnimating ? 1.15 : 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOutBack,
+        child: Text(
+          'SONORA',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.w800,
+            letterSpacing: 3,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class LinkTile extends ConsumerWidget {
   final IconData icon;
   final String text;
@@ -217,7 +317,7 @@ class LinkTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final service = ref.read(urlService);
+    final service = ref.watch(urlService);
 
     return Material(
       color: context.colors.surfaceContainerHighest,
@@ -261,39 +361,33 @@ class LinkTile extends ConsumerWidget {
   }
 }
 
-class VersionText extends StatefulWidget {
-  const VersionText({super.key});
+class VersionText extends ConsumerWidget {
+  final VoidCallback? onTap;
+
+  const VersionText({super.key, this.onTap});
 
   @override
-  State<VersionText> createState() => _VersionTextState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final versionAsync = ref.watch(packageInfoProvider);
 
-class _VersionTextState extends State<VersionText> {
-  String _version = 'Loading...';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadVersion();
-  }
-
-  Future<void> _loadVersion() async {
-    final info = await PackageInfo.fromPlatform();
-
-    if (!mounted) return;
-
-    setState(() {
-      _version = info.version;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      '${context.l10n.aboutVersion}$_version',
-      style: TextStyle(
-        color: context.colors.onSurfaceVariant,
-        fontSize: 12,
+    return GestureDetector(
+      onTap: onTap,
+      child: versionAsync.when(
+        data: (version) => Text(
+          context.l10n.aboutVersion(version),
+          style: TextStyle(
+            color: context.colors.onSurfaceVariant,
+            fontSize: 12,
+          ),
+        ),
+        loading: () => const Text(
+          'Loading...',
+          style: TextStyle(fontSize: 12),
+        ),
+        error: (_, _) => const Text(
+          'Unknown',
+          style: TextStyle(fontSize: 12),
+        ),
       ),
     );
   }

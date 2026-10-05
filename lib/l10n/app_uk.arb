@@ -96,6 +96,17 @@
   "aboutShuffleRepeat": "Перемішування та повторення",
   "aboutMultiplePlayers": "Кілька екземплярів плеєра",
   "aboutVersion": "Версія: ",
+  "@aboutVersion": {
+    "description": "Відображає версію додатка",
+    "placeholders": {
+      "number": {
+        "type": "String",
+        "description": "Відображає версію додатка"
+      }
+    }
+  },
   "aboutLinks": "Посилання",
   "aboutGithub": "GitHub проєкту",
-  "aboutSupport": "Підтримати автора"}
+  "aboutSupport": "Підтримати автора",
+  "aboutYouFoundSomething": "Ви щось знайшли..."
+}
