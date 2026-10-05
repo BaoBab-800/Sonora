@@ -6,7 +6,16 @@ class SeventhPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('7', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+      ),
+
+      body: Center(
+        child: Image.asset(
+          'assets/sem.png',
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 }
