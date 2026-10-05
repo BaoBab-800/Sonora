@@ -83,5 +83,20 @@
   "play": "Play",
   "mix": "Mix",
   "track": "Track",
-  "tracks": "Tracks"
+  "tracks": "Tracks",
+
+  "about": "About",
+  "aboutSonora": "About Sonora",
+  "aboutDescription": "Sonora is a local music player built for people who want to keep their music on their own devices.\n\nNo streaming services. No recommendations. Just your music and your playlists.",
+  "aboutFeatures": "Features",
+  "aboutLocalPlayback": "Local music playback",
+  "aboutMusicLibrary": "Music library",
+  "aboutFavorites": "Favorites",
+  "aboutPlaylists": "Playlists",
+  "aboutShuffleRepeat": "Shuffle & repeat",
+  "aboutMultiplePlayers": "Multiple player instances",
+  "aboutVersion": "Version: ",
+  "aboutLinks": "Links",
+  "aboutGithub": "Project GitHub",
+  "aboutSupport": "A penny for tea"
 }

@@ -16,6 +16,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   # Больше нет моей библиотеки :(
 
+  package_info_plus: ^10.2.2
+  url_launcher: ^6.3.3
+
   path_provider: ^2.1.6
 
   go_router: ^18.0.0

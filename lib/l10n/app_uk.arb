@@ -83,5 +83,19 @@
   "play": "Грати",
   "mix": "Перемішати",
   "track": "Трек",
-  "tracks": "Трека"
-}
+  "tracks": "Трека",
+
+  "about": "Про додаток",
+  "aboutSonora": "Про Sonora",
+  "aboutDescription": "Sonora – це локальний музичний плеєр, створений для тих, хто бажає зберігати свою музику на власних пристроях.\n\nЖодних потокових сервісів. Жодних рекомендацій. Тільки ваша музика та ваші плейлисти.",
+  "aboutFeatures": "Можливості",
+  "aboutLocalPlayback": "Відтворення локальної музики",
+  "aboutMusicLibrary": "Музична бібліотека",
+  "aboutFavorites": "Вибране",
+  "aboutPlaylists": "Плейлисти",
+  "aboutShuffleRepeat": "Перемішування та повторення",
+  "aboutMultiplePlayers": "Кілька екземплярів плеєра",
+  "aboutVersion": "Версія: ",
+  "aboutLinks": "Посилання",
+  "aboutGithub": "GitHub проєкту",
+  "aboutSupport": "Підтримати автора"}

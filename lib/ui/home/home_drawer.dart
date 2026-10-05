@@ -30,6 +30,12 @@ class HomeDrawer extends StatelessWidget {
             icon: Icons.settings,
             route: AppRoutes.settings,
           ),
+
+          _DrawerCard(
+            title: context.l10n.about,
+            icon: Icons.info_outline,
+            route: AppRoutes.about,
+          ),
         ],
       ),
     );

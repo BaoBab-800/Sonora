@@ -197,4 +197,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tracks => 'Tracks';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get aboutSonora => 'About Sonora';
+
+  @override
+  String get aboutDescription => 'Sonora is a local music player built for people who want to keep their music on their own devices.\n\nNo streaming services. No recommendations. Just your music and your playlists.';
+
+  @override
+  String get aboutFeatures => 'Features';
+
+  @override
+  String get aboutLocalPlayback => 'Local music playback';
+
+  @override
+  String get aboutMusicLibrary => 'Music library';
+
+  @override
+  String get aboutFavorites => 'Favorites';
+
+  @override
+  String get aboutPlaylists => 'Playlists';
+
+  @override
+  String get aboutShuffleRepeat => 'Shuffle & repeat';
+
+  @override
+  String get aboutMultiplePlayers => 'Multiple player instances';
+
+  @override
+  String get aboutVersion => 'Version: ';
+
+  @override
+  String get aboutLinks => 'Links';
+
+  @override
+  String get aboutGithub => 'Project GitHub';
+
+  @override
+  String get aboutSupport => 'A penny for tea';
 }

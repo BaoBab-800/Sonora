@@ -197,4 +197,46 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get tracks => 'Трека';
+
+  @override
+  String get about => 'Про додаток';
+
+  @override
+  String get aboutSonora => 'Про Sonora';
+
+  @override
+  String get aboutDescription => 'Sonora – це локальний музичний плеєр, створений для тих, хто бажає зберігати свою музику на власних пристроях.\n\nЖодних потокових сервісів. Жодних рекомендацій. Тільки ваша музика та ваші плейлисти.';
+
+  @override
+  String get aboutFeatures => 'Можливості';
+
+  @override
+  String get aboutLocalPlayback => 'Відтворення локальної музики';
+
+  @override
+  String get aboutMusicLibrary => 'Музична бібліотека';
+
+  @override
+  String get aboutFavorites => 'Вибране';
+
+  @override
+  String get aboutPlaylists => 'Плейлисти';
+
+  @override
+  String get aboutShuffleRepeat => 'Перемішування та повторення';
+
+  @override
+  String get aboutMultiplePlayers => 'Кілька екземплярів плеєра';
+
+  @override
+  String get aboutVersion => 'Версія: ';
+
+  @override
+  String get aboutLinks => 'Посилання';
+
+  @override
+  String get aboutGithub => 'GitHub проєкту';
+
+  @override
+  String get aboutSupport => 'Підтримати автора';
 }

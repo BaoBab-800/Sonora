@@ -17,7 +17,7 @@ class SettingsPage extends StatelessWidget {
           context.l10n.settings,
           style: TextStyle(
             fontSize: 22,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

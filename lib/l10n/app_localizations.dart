@@ -466,6 +466,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tracks'**
   String get tracks;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// No description provided for @aboutSonora.
+  ///
+  /// In en, this message translates to:
+  /// **'About Sonora'**
+  String get aboutSonora;
+
+  /// No description provided for @aboutDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Sonora is a local music player built for people who want to keep their music on their own devices.\n\nNo streaming services. No recommendations. Just your music and your playlists.'**
+  String get aboutDescription;
+
+  /// No description provided for @aboutFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get aboutFeatures;
+
+  /// No description provided for @aboutLocalPlayback.
+  ///
+  /// In en, this message translates to:
+  /// **'Local music playback'**
+  String get aboutLocalPlayback;
+
+  /// No description provided for @aboutMusicLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Music library'**
+  String get aboutMusicLibrary;
+
+  /// No description provided for @aboutFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get aboutFavorites;
+
+  /// No description provided for @aboutPlaylists.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlists'**
+  String get aboutPlaylists;
+
+  /// No description provided for @aboutShuffleRepeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Shuffle & repeat'**
+  String get aboutShuffleRepeat;
+
+  /// No description provided for @aboutMultiplePlayers.
+  ///
+  /// In en, this message translates to:
+  /// **'Multiple player instances'**
+  String get aboutMultiplePlayers;
+
+  /// No description provided for @aboutVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version: '**
+  String get aboutVersion;
+
+  /// No description provided for @aboutLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get aboutLinks;
+
+  /// No description provided for @aboutGithub.
+  ///
+  /// In en, this message translates to:
+  /// **'Project GitHub'**
+  String get aboutGithub;
+
+  /// No description provided for @aboutSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'A penny for tea'**
+  String get aboutSupport;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
