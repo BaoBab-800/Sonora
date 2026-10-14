@@ -32,7 +32,9 @@ class SonoraAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler
   void _onControllerState(ControllerState state) {
     final track = state.currentTrack;
 
-    if (track != null) {
+    if (track == null) {
+      mediaItem.add(null);
+    } else {
       mediaItem.add(MediaItem(
         id: track.id,
         title: track.title,

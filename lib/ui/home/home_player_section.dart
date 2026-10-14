@@ -74,6 +74,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
 
     await _playerSubscription?.cancel();
     _playerSubscription = null;
+
+    await bootstrap.audioHandler.attachController(null);
     await ref.read(playerManagerProvider).removePlayer(id);
     if (!mounted) return;
 
