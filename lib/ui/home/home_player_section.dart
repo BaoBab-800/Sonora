@@ -346,7 +346,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   icon: const Icon(Icons.replay_10),
                 ),
 
-                const SizedBox(width: 8),
+                const SizedBox(width: 4),
                 FilledButton(
                   onPressed: hasTrack
                       ? () => _run((p) => _state.status == PlayerStatus.playing
@@ -368,7 +368,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
                   ),
                 ),
 
-                const SizedBox(width: 8),
+                const SizedBox(width: 4),
                 IconButton(
                   onPressed: hasTrack
                       ? () => _run((p) => p.seek(_state.position + const Duration(seconds: 10)))

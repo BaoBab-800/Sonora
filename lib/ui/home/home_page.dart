@@ -117,7 +117,7 @@ class _StatusPill extends StatelessWidget {
           SizedBox(width: 6),
           Text(
             context.l10n.localLibary,
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(fontSize: 8),
           ),
         ],
       ),
