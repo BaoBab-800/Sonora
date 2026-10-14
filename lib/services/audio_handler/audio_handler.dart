@@ -46,9 +46,10 @@ class SonoraAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler
     playbackState.add(playbackState.value.copyWith(
       controls: [
         MediaControl.skipToPrevious,
-        state.status == PlayerStatus.playing ? MediaControl.pause : MediaControl.play,
+        state.status == PlayerStatus.playing
+            ? MediaControl.pause
+            : MediaControl.play,
         MediaControl.skipToNext,
-        MediaControl.stop,
       ],
       systemActions: const {
         MediaAction.seek,
