@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:sonora/core/l10n/l10n.dart';
+import 'package:sonora/app/app_bootstrap.dart' as bootstrap;
 import 'package:sonora/core/theme/theme.dart';
 import 'package:sonora/core/providers/player_providers.dart';
 import 'package:sonora/core/providers/track_providers.dart';
@@ -58,6 +59,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     await _playerSubscription?.cancel();
     final player = ref.read(playerManagerProvider).getPlayer(id);
     if (player == null || !mounted) return;
+    await bootstrap.audioHandler.attachController(player);
     setState(() {
       _state = player.state;
     });
@@ -79,6 +81,7 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
       ref.read(selectedPlayerIdProvider.notifier).state = null;
       _state = const ControllerState();
     });
+    await bootstrap.audioHandler.attachController(null);
 
     final remaining = ref.read(playerManagerProvider).playerIds;
     if (remaining.isNotEmpty) {
@@ -186,6 +189,8 @@ class _HomePlayerSectionState extends ConsumerState<HomePlayerSection> {
     ref.listen<String?>(selectedPlayerIdProvider, (previous, next) {
       if (next != null && next != previous) {
         _selectPlayer(next);
+      } else if (next == null) {
+        bootstrap.audioHandler.attachController(null);
       }
     });
 

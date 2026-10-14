@@ -64,6 +64,9 @@ class PlayerController implements IPlayerController {
       return;
     }
 
+    // media_kit can signal completion just before the final audio buffer has
+    // drained. Let the output finish before opening the next source.
+    await Future<void>.delayed(const Duration(seconds: 1));
     _queue = _queue.copyWith(currentIndex: nextIndex);
     await _openCurrent(autoPlay: true);
     _emit();

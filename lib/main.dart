@@ -8,17 +8,13 @@ import 'package:audio_service/audio_service.dart';
 import 'app/sonora_app.dart';
 import 'app/app_bootstrap.dart' as bootstrap;
 
-import 'core/providers/player_providers.dart';
-
 import 'data/playlists/playlist_model.dart' as playlist;
 import 'data/player_controller/track.dart' as track;
 import 'data/favorite/favorite_track.dart';
 
 import 'services/audio_handler/audio_handler.dart';
-import 'services/player_controller/i_player_controller.dart';
 
 late final ProviderContainer container;
-late final IPlayerController mainPlayerController;
 late final AudioHandler audioHandler;
 
 Future<void> main() async {
@@ -26,12 +22,8 @@ Future<void> main() async {
   MediaKit.ensureInitialized();
 
   final container = ProviderContainer();
-  final manager = container.read(playerManagerProvider);
-
-  bootstrap.mainPlayerController = manager.createPlayer();
-
   bootstrap.audioHandler = await AudioService.init(
-    builder: () => SonoraAudioHandler(bootstrap.mainPlayerController),
+    builder: () => SonoraAudioHandler(),
     config: const AudioServiceConfig(
       androidNotificationChannelId: 'com.example.sonora.channel.audio',
       androidNotificationChannelName: 'Sonora playback',

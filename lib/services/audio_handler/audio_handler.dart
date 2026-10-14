@@ -7,12 +7,26 @@ import 'package:sonora/data/player_engine/player_status.dart';
 import 'package:sonora/services/player_controller/i_player_controller.dart';
 
 class SonoraAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
-  final IPlayerController _controller;
-  late final StreamSubscription<ControllerState> _sub;
+  IPlayerController? _controller;
+  StreamSubscription<ControllerState>? _sub;
 
-  SonoraAudioHandler(this._controller) {
-    _sub = _controller.stateStream.listen(_onControllerState);
-    _onControllerState(_controller.state);
+  SonoraAudioHandler();
+
+  Future<void> attachController(IPlayerController? controller) async {
+    if (identical(_controller, controller)) return;
+    await _sub?.cancel();
+    _controller = controller;
+    if (controller == null) {
+      mediaItem.add(null);
+      playbackState.add(playbackState.value.copyWith(
+        processingState: AudioProcessingState.idle,
+        playing: false,
+        updatePosition: Duration.zero,
+      ));
+      return;
+    }
+    _sub = controller.stateStream.listen(_onControllerState);
+    _onControllerState(controller.state);
   }
 
   void _onControllerState(ControllerState state) {
@@ -65,25 +79,37 @@ class SonoraAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler
   }
 
   @override
-  Future<void> play() => _controller.play();
+  Future<void> play() async {
+    await _controller?.play();
+  }
 
   @override
-  Future<void> pause() => _controller.pause();
+  Future<void> pause() async {
+    await _controller?.pause();
+  }
 
   @override
   Future<void> stop() async {
-    await _controller.stop();
+    await _controller?.stop();
     await super.stop();
   }
 
   @override
-  Future<void> seek(Duration position) => _controller.seek(position);
+  Future<void> seek(Duration position) async {
+    await _controller?.seek(position);
+  }
 
   @override
-  Future<void> skipToNext() => _controller.next();
+  Future<void> skipToNext() async {
+    await _controller?.next();
+  }
 
   @override
-  Future<void> skipToPrevious() => _controller.previous();
+  Future<void> skipToPrevious() async {
+    await _controller?.previous();
+  }
 
-  Future<void> dispose() => _sub.cancel();
+  Future<void> dispose() async {
+    await _sub?.cancel();
+  }
 }

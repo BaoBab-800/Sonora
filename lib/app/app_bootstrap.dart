@@ -1,6 +1,3 @@
-import 'package:audio_service/audio_service.dart';
+import 'package:sonora/services/audio_handler/audio_handler.dart';
 
-import 'package:sonora/services/player_controller/i_player_controller.dart';
-
-late final IPlayerController mainPlayerController;
-late final AudioHandler audioHandler;
+late final SonoraAudioHandler audioHandler;
