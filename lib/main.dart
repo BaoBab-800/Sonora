@@ -27,6 +27,7 @@ Future<void> main() async {
     config: const AudioServiceConfig(
       androidNotificationChannelId: 'com.example.sonora.channel.audio',
       androidNotificationChannelName: 'Sonora playback',
+      androidNotificationOngoing: true,
     ),
   );
 
